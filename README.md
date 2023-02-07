@@ -48,8 +48,9 @@ You can also use this application as a model to start developing your own applic
 
 * Click from Xcode tab bar "Product" then "Build" (or use the shortcut "Command⌘ B").
 
-### Run the HelloV2XWorld application on the any iOS Simulator or real device after providing your own Development provision profile.
+### Run the HelloV2XWorld application
 
+* You can run the app on any iOS Simulator or real device after providing your own Development provision profile.
 * Select your iOS Simulator (for ex. iPhone 14.)
 * Press the RUN button.
 * Wait until the "Simulator" windows appears.
