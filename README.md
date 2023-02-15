@@ -23,7 +23,13 @@ You can also use this application as a model to start developing your own applic
 ### Download the V2X-SDK library for iOS
 
 * Register yourself on the [STEP Web portal](https://step.vodafone.com/)
+<img width="1145" alt="step1 (1)" src="https://user-images.githubusercontent.com/124599387/219050113-50e5a149-1559-4776-af0f-30d3ad16c5ef.png">
+
 * Go to the [STEP Web portal](https://step.vodafone.com/) webpage and login.
+
+   * Enter your credentials:
+<img width="1145" alt="step2" src="https://user-images.githubusercontent.com/124599387/219050444-cf48a53c-60e4-458a-a021-5841a789ccc6.png">
+
 * Navigate to the page "Documentation" and select the "SDK documentation for iOS" option.
 * In the "SDK documentation for iOS" page , click on the "Download SDK" button.
 => Your browser downloads the archive "VodafoneV2X_iOS_SDK.rar".
@@ -34,6 +40,8 @@ You can also use this application as a model to start developing your own applic
 * Open Xcode.
 * Choose from the Xcode tab bar "Source Control" then "Clone".
 * In the popup window enter the repository URL "https://github.com/Vodafone/HelloV2XWorld-iOS.git".
+<img width="812" alt="Screenshot 2023-02-15 at 4 45 10 PM" src="https://user-images.githubusercontent.com/124599387/219060946-09effd69-2d20-4abb-956c-b93ddf2e9326.png">
+
 * Press "Clone" button to start downloading the HelloV2XWorld project.
 * Wait until the completion of this operation.
 * Choose "main" branch from the popup then press "Clone" then desired save location on you MacBook.
@@ -42,7 +50,11 @@ You can also use this application as a model to start developing your own applic
 
 * After opening the HelloV2XWorld project.
 * Go to xcodproj settings page "General".
-* Scroll down to "Frameworks" and click on the "+" sign then choose to add pre-downloaded "VodafoneV2X.xcframework".
+* Scroll down to "Frameworks" and click on the "+" sign.
+<img width="1426" alt="Screenshot 2023-02-15 at 5 09 18 PM" src="https://user-images.githubusercontent.com/124599387/219067872-dfad32dc-1b96-4f96-87a1-c50fa88635e7.png">
+* Choose "Add Others" then "Add Files" and select to add the pre-downloaded "VodafoneV2X.xcframework".
+<img width="1426" alt="Screenshot 2023-02-15 at 5 13 50 PM" src="https://user-images.githubusercontent.com/124599387/219068916-3a921a60-3a4b-4ec6-8cdb-e794c6e35f6f.png">
+
 
 ### Build the HelloV2XWorld application
 
