@@ -66,13 +66,29 @@ You can also use this application as a model to start developing your own applic
 * Select your iOS Simulator (for ex. iPhone 14.)
 * Press the RUN button.
 * Wait until the "Simulator" windows appears.
+<img width="978" alt="Screenshot 2023-02-15 at 5 21 14 PM" src="https://user-images.githubusercontent.com/124599387/219073820-fda13846-2880-4e9f-8e4a-83bca6f85057.png">
+
 * When the App opens, read the Term and Conditions, Click on the next button to navigate till the end then click on the "Accept" button.
+<img width="978" alt="Screenshot 2023-02-15 at 5 22 38 PM" src="https://user-images.githubusercontent.com/124599387/219071275-fcb3d179-277f-40e4-956b-3469de927704.png">
+
 * Accept the location permissions to provide your own location data.
+<img width="978" alt="Screenshot 2023-02-15 at 5 24 14 PM" src="https://user-images.githubusercontent.com/124599387/219071498-53ee428d-07eb-4016-9d29-3976c463fd68.png">
+
 * A map is displayed centered on your current location.
+<img width="978" alt="Screenshot 2023-02-15 at 5 25 28 PM" src="https://user-images.githubusercontent.com/124599387/219071875-78b48c79-571d-4a6a-82a4-786ef045b84b.png">
+
 * The blue icon represents yourself.
 * The red icons represents the other road users close to you.
-* You can change your station type by accessing the setting page
+<img width="978" alt="Screenshot 2023-02-15 at 5 26 58 PM" src="https://user-images.githubusercontent.com/124599387/219072339-ec0c9f0a-e28f-44d7-a7ed-7236850d8940.png">
 
+* When clicking on the blue icon, app displays you ITS information: StationID, StationType, Speed, Heading.
+<img width="978" alt="Screenshot 2023-02-15 at 5 28 08 PM" src="https://user-images.githubusercontent.com/124599387/219073433-9fffe855-ff5b-49e9-985e-bdef510d7201.png">
+
+* When clicking on any red icon, app displays you the CAM information: StationID, StationType, Speed, Heading.
+<img width="978" alt="Screenshot 2023-02-15 at 5 29 30 PM" src="https://user-images.githubusercontent.com/124599387/219073535-4c4a736f-a3d0-4b78-9beb-2540c1cd1e31.png">
+
+* You can change your station type by accessing the setting page
+<img width="978" alt="Screenshot 2023-02-15 at 5 29 38 PM" src="https://user-images.githubusercontent.com/124599387/219073630-0802fe3e-20ba-4403-9ab7-99fdd0da5b6c.png">
 
 ## Version History
 
