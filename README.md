@@ -29,9 +29,18 @@ You can also use this application as a model to start developing your own applic
 
    * Enter your credentials:
 <img width="1145" alt="step2" src="https://user-images.githubusercontent.com/124599387/219050444-cf48a53c-60e4-458a-a021-5841a789ccc6.png">
+   * Enter your PinCode:
+<img width="1145" alt="Screenshot 2023-02-16 at 11 46 58 AM" src="https://user-images.githubusercontent.com/124599387/219347713-ae3ab91e-092d-4222-9241-91898eb10907.png">
 
 * Navigate to the page "Documentation" and select the "SDK documentation for iOS" option.
-* In the "SDK documentation for iOS" page , click on the "Download SDK" button.
+<img width="1145" alt="sdkiOS" src="https://user-images.githubusercontent.com/124599387/219348034-8c6f63e1-9070-43b8-9e4c-27bdd92cb7f2.png">
+
+* In the "SDK documentation for iOS" page.
+   * click on the "Download SDK" button for the SDK xcframework.
+   * click on the "Download documentation" button for the SDK documentation and user guide.
+<img width="1145" alt="downloadSDKiOS (1)" src="https://user-images.githubusercontent.com/124599387/219348935-697b4ad1-2ac5-4689-9e14-184683b86f47.png">
+
+
 => Your browser downloads the archive "VodafoneV2X_iOS_SDK.rar".
 * Open the archive, extract the V2X-SDK library file called "VodafoneV2X.xcframework" and save it on your laptop.
 
