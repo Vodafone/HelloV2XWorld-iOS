@@ -12,8 +12,6 @@
 		1879C1F02967170C00B3994D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1879C1EF2967170C00B3994D /* SettingsView.swift */; };
 		18D25E842968963B000AE12A /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D25E832968963B000AE12A /* Enums.swift */; };
 		18F5125729757E7F00DE5CD0 /* PDFViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F5125629757E7F00DE5CD0 /* PDFViewer.swift */; };
-		8C08EC242993C48100023A8E /* VodafoneV2X.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C08EC222993C47C00023A8E /* VodafoneV2X.xcframework */; };
-		8C08EC252993C48100023A8E /* VodafoneV2X.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8C08EC222993C47C00023A8E /* VodafoneV2X.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8C7E6290295C86470016B14F /* HelloV2XWorldApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7E628F295C86470016B14F /* HelloV2XWorldApp.swift */; };
 		8C7E6292295C86470016B14F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7E6291295C86470016B14F /* HomeView.swift */; };
 		8C7E6294295C86480016B14F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C7E6293295C86480016B14F /* Assets.xcassets */; };
@@ -31,7 +29,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8C08EC252993C48100023A8E /* VodafoneV2X.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -44,7 +41,6 @@
 		1879C1EF2967170C00B3994D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		18D25E832968963B000AE12A /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		18F5125629757E7F00DE5CD0 /* PDFViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewer.swift; sourceTree = "<group>"; };
-		8C08EC222993C47C00023A8E /* VodafoneV2X.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = VodafoneV2X.xcframework; sourceTree = "<group>"; };
 		8C7E628C295C86470016B14F /* HelloV2XWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloV2XWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C7E628F295C86470016B14F /* HelloV2XWorldApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloV2XWorldApp.swift; sourceTree = "<group>"; };
 		8C7E6291295C86470016B14F /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -62,7 +58,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C08EC242993C48100023A8E /* VodafoneV2X.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +85,6 @@
 		8C37A730298A65B20007FF9B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8C08EC222993C47C00023A8E /* VodafoneV2X.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
