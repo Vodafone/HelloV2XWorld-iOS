@@ -1,0 +1,2329 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.7.1 (swiftlang-5.7.1.135.3 clang-1400.0.29.51)
+// swift-module-flags: -target x86_64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name VodafoneV2X
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import Combine
+import CoreLocation
+import Foundation
+import MapKit
+import Swift
+import UIKit
+@_exported import VodafoneV2X
+import _Concurrency
+import _StringProcessing
+import os.log
+import os
+public protocol GNSSReceiving {
+  var binding: Combine.AnyPublisher<VodafoneV2X.V2XLocation, Swift.Never>? { get }
+  var isActiveListener: Combine.AnyPublisher<Swift.Bool, Swift.Never> { get }
+}
+@_hasMissingDesignatedInitializers public class GNSSReceiverService : VodafoneV2X.DynamicListSource, VodafoneV2X.GNSSReceiving {
+  public var binding: Combine.AnyPublisher<VodafoneV2X.V2XLocation, Swift.Never>? {
+    get
+  }
+  @Combine.Published @_projectedValueProperty($isActive) public var isActive: Swift.Bool {
+    get
+  }
+  public var $isActive: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  public var isActiveListener: Combine.AnyPublisher<Swift.Bool, Swift.Never> {
+    get
+  }
+  public typealias InnerListObject = VodafoneV2X.V2XLocation
+  @objc deinit
+}
+extension VodafoneV2X.GNSSReceiverService : VodafoneV2X.ServiceActivity {
+  public func start(for service: VodafoneV2X.ServiceConsumer) -> Swift.Bool
+  public func stop(for service: VodafoneV2X.ServiceConsumer) -> Swift.Bool
+}
+public struct GeoHash {
+  public struct Bounds {
+    public let sw: CoreLocation.CLLocationCoordinate2D
+    public let ne: CoreLocation.CLLocationCoordinate2D
+  }
+  public static func encode(_ coordinate: CoreLocation.CLLocationCoordinate2D, precision: Swift.Int = 8) -> Swift.String?
+  public static func decode(_ geohash: Swift.String) -> CoreLocation.CLLocationCoordinate2D?
+  public static func bounds(_ geohash: Swift.String) -> VodafoneV2X.GeoHash.Bounds?
+  public static func adjacent(_ geohash: Swift.String, _ direction: VodafoneV2X.GeoHash.Direction) -> Swift.String?
+  public static func neighbours(_ geohash: Swift.String) -> [VodafoneV2X.GeoHash.Direction : Swift.String]?
+  public struct Direction : Swift.OptionSet, Swift.Hashable {
+    public let rawValue: Swift.Int
+    public static let north: VodafoneV2X.GeoHash.Direction
+    public static let south: VodafoneV2X.GeoHash.Direction
+    public static let east: VodafoneV2X.GeoHash.Direction
+    public static let west: VodafoneV2X.GeoHash.Direction
+    public static let northEast: VodafoneV2X.GeoHash.Direction
+    public static let northWest: VodafoneV2X.GeoHash.Direction
+    public static let southEast: VodafoneV2X.GeoHash.Direction
+    public static let southWest: VodafoneV2X.GeoHash.Direction
+    public init(rawValue: Swift.Int)
+    public var description: Swift.String {
+      get
+    }
+    public typealias ArrayLiteralElement = VodafoneV2X.GeoHash.Direction
+    public typealias Element = VodafoneV2X.GeoHash.Direction
+    public typealias RawValue = Swift.Int
+  }
+}
+extension Foundation.NSData {
+  @objc dynamic public var reversed: Foundation.Data {
+    @objc get
+  }
+  @objc dynamic public func hexEncoded() -> Swift.String
+}
+extension Foundation.Data {
+  public var dataAsUInt8: [Swift.UInt8] {
+    get
+  }
+  public static func uint8AsData(_ array: [Swift.UInt8]) -> Foundation.Data
+  public struct HexEncodingOptions : Swift.OptionSet {
+    public let rawValue: Swift.Int
+    public static let noSpacing: Foundation.Data.HexEncodingOptions
+    public static let byteSpaced: Foundation.Data.HexEncodingOptions
+    public init(rawValue: Swift.Int)
+    public typealias ArrayLiteralElement = Foundation.Data.HexEncodingOptions
+    public typealias Element = Foundation.Data.HexEncodingOptions
+    public typealias RawValue = Swift.Int
+  }
+  public func hexEncodedString(options: Foundation.Data.HexEncodingOptions = .noSpacing) -> Swift.String
+}
+@_inheritsConvenienceInitializers @objc final public class DENMConstants : ObjectiveC.NSObject {
+  @objc public static var protocolVersion: VodafoneV2X.ProtocolVersion {
+    @objc get
+  }
+  @objc public static var messageID: VodafoneV2X.MessageID {
+    @objc get
+  }
+  @objc public static var stationID: Swift.UInt {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc final public class ManagementContainerConstants : ObjectiveC.NSObject {
+  @objc public static var originStationID: Swift.UInt {
+    @objc get
+  }
+  @objc public static var sequenceNumber: Swift.Int {
+    get
+  }
+  @objc public static var relevanceDistance: VodafoneV2X.RelevanceDistanceKind {
+    @objc get
+  }
+  @objc public static var relevanceTrafficDirection: VodafoneV2X.RelevanceTrafficDirectionKind {
+    @objc get
+  }
+  @objc public static var validityDuration: Swift.Int {
+    get
+  }
+  @objc public static var transmissionInterval: Swift.Int {
+    get
+  }
+  @objc public static var stationType: VodafoneV2X.StationKind {
+    @objc get
+  }
+  @objc public static var semiMajorConfidence: Swift.UInt {
+    @objc get
+  }
+  @objc public static var semiMinorConfidence: Swift.UInt {
+    @objc get
+  }
+  @objc public static var semiMajorOrientation: VodafoneV2X.V2XHeadingValue {
+    @objc get
+  }
+  @objc public static var altitudeValue: CoreLocation.CLLocationDistance {
+    @objc get
+  }
+  @objc public static var altitudeConfidence: VodafoneV2X.V2XAltitudeConfidence {
+    @objc get
+  }
+  @objc public static var latitude: CoreLocation.CLLocationDegrees {
+    @objc get
+  }
+  @objc public static var longitude: CoreLocation.CLLocationDegrees {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc final public class SituationContainerConstants : ObjectiveC.NSObject {
+  @objc public static var informationQuality: VodafoneV2X.InformationQualityKind {
+    @objc get
+  }
+  @objc public static var eventCauseCode: VodafoneV2X.CauseCodeKind {
+    @objc get
+  }
+  @objc public static var eventSubCauseCode: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc final public class LocationContainerConstants : ObjectiveC.NSObject {
+  @objc public static var speedConfidence: VodafoneV2X.V2XSpeedConfidence {
+    @objc get
+  }
+  @objc public static var speedValue: CoreLocation.CLLocationSpeed {
+    @objc get
+  }
+  @objc public static var headingConfidence: VodafoneV2X.V2XHeadingConfidence {
+    @objc get
+  }
+  @objc public static var headingValue: CoreLocation.CLLocationDirection {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc final public class DENMHeaderConstants : ObjectiveC.NSObject {
+  @objc public static var headerType: VodafoneV2X.V2XHeaderType {
+    get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public protocol TrafficLightRecord {
+  @objc var intersectionRegion: Swift.Int { get }
+  @objc var intersectionID: Swift.Int { get }
+  @objc var signalGroup: Swift.Int { get }
+  @objc var trafficLightMovements: [VodafoneV2X.TrafficLighMovement] { get }
+}
+@objc public class TrafficLightRecordImpl : ObjectiveC.NSObject, VodafoneV2X.TrafficLightRecord {
+  @objc final public let intersectionRegion: Swift.Int
+  @objc final public let intersectionID: Swift.Int
+  @objc final public let signalGroup: Swift.Int
+  @objc final public let trafficLightMovements: [VodafoneV2X.TrafficLighMovement]
+  @objc public init(intersectionRegion: Swift.Int, intersectionID: Swift.Int, signalGroup: Swift.Int, trafficLightMovements: [VodafoneV2X.TrafficLighMovement])
+  @objc deinit
+}
+extension Foundation.NSDate {
+  @objc public static var ntp: Foundation.Date {
+    @objc get
+  }
+  @objc public static var ntpTimestamp: Foundation.TimeInterval {
+    @objc get
+  }
+  @objc public static var ntpDelta: Foundation.TimeInterval {
+    @objc get
+  }
+  @objc dynamic public func TSTTAIMOD32() -> Swift.UInt32
+  @objc public static func dateFromETSIReference(mod32 interval: Swift.UInt32) -> Foundation.NSDate
+  @objc dynamic public func computeTimestampITSms() -> Foundation.TimeInterval
+  @objc public static func computeDateFromTimestampITS(_ tsITSms: Foundation.TimeInterval) -> Foundation.NSDate
+}
+extension Foundation.Date {
+  public static func - (lhs: Foundation.Date, rhs: Foundation.Date) -> Foundation.TimeInterval
+  public func computeTimestampITSms() -> Foundation.TimeInterval
+  public func TSTTAIMOD32() -> Swift.UInt32
+  public static func computeDateFromTimestampITS(_ tsITSms: Foundation.TimeInterval) -> Foundation.Date
+  public static func dateFromETSIReference(mod32 interval: Swift.UInt32) -> Foundation.Date
+}
+extension Foundation.Date {
+  public static var ntpDelta: Foundation.TimeInterval {
+    get
+  }
+  public static var ntpTimestamp: Foundation.TimeInterval {
+    get
+  }
+}
+public enum ConfigsOnDemand {
+  public static var stationID: Swift.UInt
+  public static var stationType: VodafoneV2X.StationKind {
+    get
+    set
+  }
+  public enum CAM {
+    public static var vehicleRole: VodafoneV2X.V2XVehicleRole {
+      get
+      set
+    }
+    public static var stationMACAddress: Swift.UInt {
+      get
+      set
+    }
+    public static var vehicleWidth: ObjectiveC.NSInteger {
+      get
+    }
+    public static var vehicleLength: ObjectiveC.NSInteger {
+      get
+    }
+    public static func setVehicleLength(length: ObjectiveC.NSInteger) throws
+    public static func setVehicleWidth(width: ObjectiveC.NSInteger) throws
+  }
+  public static var clientID: Swift.String? {
+    get
+  }
+  public static var customDeviceOrientation: CoreLocation.CLDeviceOrientation?
+}
+public struct V2XCLLocation : Swift.Equatable, VodafoneV2X.EventObjectValidity, Swift.Identifiable {
+  public let validity: Foundation.TimeInterval
+  public let location: CoreLocation.CLLocation
+  public var id: Swift.UInt
+  public static func == (lhs: VodafoneV2X.V2XCLLocation, rhs: VodafoneV2X.V2XCLLocation) -> Swift.Bool
+  public typealias ID = Swift.UInt
+}
+public struct V2XLocation : VodafoneV2X.EventObject {
+  public let heading: CoreLocation.CLHeading?
+  public var object: VodafoneV2X.V2XCLLocation?
+  public typealias Object = VodafoneV2X.V2XCLLocation
+}
+public protocol GPSLocationUpdating : AnyObject {
+  var binding: Combine.AnyPublisher<VodafoneV2X.V2XLocation, Swift.Never> { get }
+  var isActiveListener: Combine.AnyPublisher<Swift.Bool, Swift.Never> { get }
+  @discardableResult
+  func start(for service: VodafoneV2X.ServiceConsumer) -> Swift.Bool
+  @discardableResult
+  func stop(for service: VodafoneV2X.ServiceConsumer) -> Swift.Bool
+}
+@objc @_hasMissingDesignatedInitializers public class GPSLocationSource : ObjectiveC.NSObject {
+  public var isActiveListener: Combine.AnyPublisher<Swift.Bool, Swift.Never> {
+    get
+  }
+  public var binding: Combine.AnyPublisher<VodafoneV2X.V2XLocation, Swift.Never> {
+    get
+  }
+  @objc deinit
+}
+extension VodafoneV2X.GPSLocationSource : VodafoneV2X.GPSLocationUpdating {
+  public func start(for service: VodafoneV2X.ServiceConsumer) -> Swift.Bool
+  public func stop(for service: VodafoneV2X.ServiceConsumer) -> Swift.Bool
+}
+extension VodafoneV2X.GPSLocationSource : CoreLocation.CLLocationManagerDelegate {
+  @objc dynamic public func locationManagerDidChangeAuthorization(_ manager: CoreLocation.CLLocationManager)
+  @objc dynamic open func locationManager(_ manager: CoreLocation.CLLocationManager, didUpdateLocations locations: [CoreLocation.CLLocation])
+  @objc dynamic open func locationManager(_ manager: CoreLocation.CLLocationManager, didUpdateHeading newHeading: CoreLocation.CLHeading)
+  public func updateGnssEmulatorLocation(data: VodafoneV2X.LocationEmulatorModel?)
+}
+extension Foundation.NSNotification.Name {
+  public static let locationManagerStatusChanged: Foundation.Notification.Name
+}
+public struct V2XIVIM : VodafoneV2X.MQTTEventObject {
+  public var topic: VodafoneV2X.V2XMQTTTopic
+  public var object: VodafoneV2X.IVIMRecord?
+  public init(topic: VodafoneV2X.V2XMQTTTopic, object: VodafoneV2X.IVIMRecord?)
+  public typealias Object = VodafoneV2X.IVIMRecord
+}
+public protocol IVIMServiceUpdating : VodafoneV2X.ETSIServicing {
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class IVIMService : VodafoneV2X.GenericService<VodafoneV2X.V2XIVIM>, VodafoneV2X.IVIMServiceUpdating {
+  @objc deinit
+}
+extension Foundation.NSString {
+  @objc dynamic public func dataFromHexString() -> Foundation.NSData?
+  @objc dynamic public func decToHex(separator: Foundation.NSString) -> Foundation.NSString?
+}
+extension Swift.String {
+  public static var empty: Swift.String {
+    get
+  }
+  public var hexToData: Foundation.Data? {
+    get
+  }
+  public func decimalToHexString(_ separator: Swift.String = ".") -> Swift.String?
+}
+public struct DENMRecord : Swift.Equatable, VodafoneV2X.EventObjectValidity, VodafoneV2X.ETSICancellable, Swift.Identifiable, VodafoneV2X.RecordsInitialiser {
+  public let validity: Foundation.TimeInterval
+  public let stationID: Swift.UInt
+  public let cause: VodafoneV2X.CauseCodeKind
+  public let subCause: Swift.UInt
+  public let sequenceNumber: Swift.UInt
+  public let latitude: CoreLocation.CLLocationDegrees
+  public let longitude: CoreLocation.CLLocationDegrees
+  public let altitude: CoreLocation.CLLocationDistance
+  public let speedKmH: Swift.Double
+  public let heading: CoreLocation.CLLocationDirection
+  public let txInterval: Swift.UInt
+  public let relevanceDistance: VodafoneV2X.RelevanceDistanceKind
+  public let stationType: VodafoneV2X.StationKind
+  public let termination: VodafoneV2X.TerminationKind?
+  public let timeStamp: Foundation.TimeInterval
+  public let eventHistory: [VodafoneV2X.EventPointPublic]?
+  public let traces: [VodafoneV2X.PathPointPublic]?
+  public var canceled: Swift.Bool {
+    get
+  }
+  public var id: Swift.UInt {
+    get
+  }
+  public static func record(from data: Foundation.Data?) -> VodafoneV2X.DENMRecord?
+  public static func == (lhs: VodafoneV2X.DENMRecord, rhs: VodafoneV2X.DENMRecord) -> Swift.Bool
+  public typealias ID = Swift.UInt
+}
+extension VodafoneV2X.RelevanceDistanceKind {
+  public var toValue: CoreLocation.CLLocationDistance {
+    get
+  }
+  public static func toEnum(_ distance: Swift.UInt) -> VodafoneV2X.RelevanceDistanceKind
+}
+@_hasMissingDesignatedInitializers final public class V2XDIContainer {
+  public static var shared: VodafoneV2X.V2XDIContainer? {
+    get
+  }
+  final public var serviceAreaServiceImpl: VodafoneV2X.ServiceAreaService?
+  public static func setupDIContainer(with file: Foundation.URL, geohashing algorithms: VodafoneV2X.GeoHashingAlgorithms? = nil, keychain: VodafoneV2X.KeychainAccessing? = nil) throws
+  public static func setupDIContainer(with config: VodafoneV2X.V2XConfigurator, geohashing algorithms: VodafoneV2X.GeoHashingAlgorithms? = nil, keychain: VodafoneV2X.KeychainAccessing? = nil)
+  final public func reconfigureMQTT(_ configurator: VodafoneV2X.V2XMQTTConfigurator)
+  public enum DynamicZoneProviderType {
+    case cam
+    case denm
+    case ivim
+    case spatem
+    case mapem
+    case vam
+    public static func == (a: VodafoneV2X.V2XDIContainer.DynamicZoneProviderType, b: VodafoneV2X.V2XDIContainer.DynamicZoneProviderType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  @objc deinit
+}
+extension VodafoneV2X.V2XDIContainer : VodafoneV2X.ListProviderServices {
+  final public var gpsLocationListProvider: VodafoneV2X.ITSLocationsListProvider? {
+    get
+  }
+  weak final public var camListProvider: VodafoneV2X.CAMListProvider? {
+    get
+  }
+  weak final public var denmListProvider: VodafoneV2X.DENMListProvider? {
+    get
+  }
+  weak final public var ivimListProvider: VodafoneV2X.IVIMListProvider? {
+    get
+  }
+  weak final public var spatemListProvider: VodafoneV2X.SPATEMListProvider? {
+    get
+  }
+  weak final public var mapemListProvider: VodafoneV2X.MAPEMListProvider? {
+    get
+  }
+  weak final public var vamListProvider: VodafoneV2X.VAMListProvider? {
+    get
+  }
+}
+extension VodafoneV2X.V2XDIContainer : VodafoneV2X.ContainerDefaultServices {
+  final public func dynamicZoneChanged(_ service: VodafoneV2X.V2XDIContainer.DynamicZoneProviderType) -> Combine.AnyPublisher<VodafoneV2X.DynamicZone, Swift.Never>?
+  final public var ivimService: VodafoneV2X.IVIMServiceUpdating? {
+    get
+  }
+  final public var camService: VodafoneV2X.CAMServiceUpdating? {
+    get
+  }
+  final public var denmService: VodafoneV2X.DENMServiceUpdating? {
+    get
+  }
+  final public var spatemService: VodafoneV2X.SPATEMServiceUpdating? {
+    get
+  }
+  final public var mapemService: VodafoneV2X.MAPEMServiceUpdating? {
+    get
+  }
+  final public var vamService: VodafoneV2X.VAMServiceUpdating? {
+    get
+  }
+  final public var serviceAreaService: VodafoneV2X.ServiceAreaUpdatingProtocol? {
+    get
+  }
+  final public var gpsLocationSource: VodafoneV2X.GPSLocationUpdating? {
+    get
+  }
+  final public var gnssReceiver: VodafoneV2X.GNSSReceiving? {
+    get
+  }
+  final public var mqttClient: VodafoneV2X.MQTTProtocol? {
+    get
+  }
+  final public var mqttReconnect: VodafoneV2X.MQTTReconnectionProtocol? {
+    get
+  }
+}
+extension VodafoneV2X.V2XDIContainer : VodafoneV2X.DIContainerOperators {
+  final public func register<Component>(type: Component.Type, component: Any)
+  final public func replace<Component>(type: Component.Type, component: Any)
+  final public func resolve<Component>() -> Component?
+  final public func resolve<Component>(type: Component.Type) -> Component?
+}
+extension VodafoneV2X.V2XDIContainer {
+  final public func retrieveServiceAreasList(mqttManager: VodafoneV2X.MQTTManager?)
+  final public func retrieveNearestServiceArea(currentServiceArea: VodafoneV2X.ServiceArea?) -> VodafoneV2X.ServiceAreaDistance
+  final public func retrieveNearestServiceAreaID(location: CoreLocation.CLLocation) -> VodafoneV2X.ServiceAreaIDDistance
+  final public func getServiceAreasList() -> VodafoneV2X.ServiceAreaModel?
+  final public func getServiceAreasResult() -> VodafoneV2X.ServiceAreaRecord?
+}
+public struct MAPEMRecord : Swift.Equatable, VodafoneV2X.EventObjectValidity, VodafoneV2X.ETSICancellable, Swift.Identifiable, VodafoneV2X.RecordsInitialiser {
+  public var validity: Foundation.TimeInterval
+  public let creationUTCTime: Foundation.TimeInterval
+  public let expirationUTCTime: Foundation.TimeInterval
+  public let lanes: [VodafoneV2X.GenericLaneOptionals]?
+  public let computedLanes: [VodafoneV2X.ComputedLaneOptionals]?
+  public var id: Swift.UInt {
+    get
+  }
+  public var canceled: Swift.Bool {
+    get
+  }
+  public static func record(from data: Foundation.Data?) -> VodafoneV2X.MAPEMRecord?
+  public static func == (lhs: VodafoneV2X.MAPEMRecord, rhs: VodafoneV2X.MAPEMRecord) -> Swift.Bool
+  public typealias ID = Swift.UInt
+}
+public protocol ETSICancellable {
+  var canceled: Swift.Bool { get }
+}
+public protocol EventObjectValidity {
+  var validity: Foundation.TimeInterval { get }
+}
+public protocol RecordsInitialiser {
+  static func record(from data: Foundation.Data?) -> Self?
+}
+public protocol EventObject {
+  associatedtype Object : Swift.Identifiable, VodafoneV2X.EventObjectValidity
+  var object: Self.Object? { get }
+}
+public protocol MQTTEventObject {
+  associatedtype Object : Swift.Identifiable, VodafoneV2X.EventObjectValidity, VodafoneV2X.RecordsInitialiser
+  var object: Self.Object? { get }
+  var topic: VodafoneV2X.V2XMQTTTopic { get }
+  init(topic: VodafoneV2X.V2XMQTTTopic, object: Self.Object?)
+}
+public enum ServiceState {
+  case notReadyOrStopped
+  case started
+  public static func == (a: VodafoneV2X.ServiceState, b: VodafoneV2X.ServiceState) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct ServiceConsumer : Swift.OptionSet {
+  public let rawValue: Swift.Int
+  public static let cam: VodafoneV2X.ServiceConsumer
+  public static let denm: VodafoneV2X.ServiceConsumer
+  public static let ivim: VodafoneV2X.ServiceConsumer
+  public static let mapem: VodafoneV2X.ServiceConsumer
+  public static let spatem: VodafoneV2X.ServiceConsumer
+  public static let vam: VodafoneV2X.ServiceConsumer
+  public static let serviceArea: VodafoneV2X.ServiceConsumer
+  public static let locationEmulator: VodafoneV2X.ServiceConsumer
+  public init(rawValue: Swift.Int)
+  public typealias ArrayLiteralElement = VodafoneV2X.ServiceConsumer
+  public typealias Element = VodafoneV2X.ServiceConsumer
+  public typealias RawValue = Swift.Int
+}
+public protocol ServiceActivity {
+  var isActive: Swift.Bool { get }
+  var isActiveListener: Combine.AnyPublisher<Swift.Bool, Swift.Never> { get }
+  @discardableResult
+  func start(for service: VodafoneV2X.ServiceConsumer) -> Swift.Bool
+  @discardableResult
+  func stop(for service: VodafoneV2X.ServiceConsumer) -> Swift.Bool
+}
+public protocol DynamicListSource : AnyObject, VodafoneV2X.ServiceActivity {
+  associatedtype InnerListObject : VodafoneV2X.EventObject
+  var binding: Combine.AnyPublisher<Self.InnerListObject, Swift.Never>? { get }
+}
+public typealias CancellableAndTopic = (binding: Combine.AnyCancellable, topic: VodafoneV2X.V2XMQTTTopic)
+public protocol V2XMessageUpdater {
+  var sequenceNumber: Swift.UInt { get }
+}
+public protocol SourceUpdateable {
+  func updateObject(_ msgUpdate: VodafoneV2X.V2XMessageUpdater)
+  func cancelObject(_ sequenceNumber: Swift.UInt)
+  func publish(_ objectV2X: VodafoneV2X.UPEREncodable, location: CoreLocation.CLLocation?, heading: CoreLocation.CLHeading?, qos: VodafoneV2X.QoSType, completion: ((Swift.UInt) -> Swift.Void)?)
+}
+extension VodafoneV2X.SourceUpdateable {
+  public func publish(_ objectV2X: VodafoneV2X.UPEREncodable, location: CoreLocation.CLLocation? = nil, heading: CoreLocation.CLHeading? = nil, qos: VodafoneV2X.QoSType = .qos0, completion: ((Swift.UInt) -> Swift.Void)?)
+}
+public protocol SourcePublishing {
+  func publish(_ objectV2X: VodafoneV2X.UPEREncodable, location: CoreLocation.CLLocation?, heading: CoreLocation.CLHeading?, qos: VodafoneV2X.QoSType)
+}
+extension VodafoneV2X.SourcePublishing {
+  public func publish(_ objectV2X: VodafoneV2X.UPEREncodable, location: CoreLocation.CLLocation? = nil, heading: CoreLocation.CLHeading? = nil, qos: VodafoneV2X.QoSType = .qos0)
+}
+public protocol MQTTListSource : AnyObject {
+  associatedtype InnerListObject : VodafoneV2X.MQTTEventObject
+  var tileSize: Swift.Int { get }
+  var isActive: Swift.Bool { get }
+  var isActiveListener: Combine.AnyPublisher<Swift.Bool, Swift.Never> { get }
+  var zoneChanged: Combine.AnyPublisher<VodafoneV2X.DynamicZone, Swift.Never>? { get }
+  var binding: Combine.AnyPublisher<Self.InnerListObject, Swift.Never> { get }
+  @discardableResult
+  func start() -> Swift.Bool
+  @discardableResult
+  func stop() -> Swift.Bool
+}
+extension os.OSLog {
+  public static let coreLogging: os.OSLog
+  public static var dateFormatter: Foundation.DateFormatter
+}
+public func v2xDebugPrint(_ items: Swift.String..., filename: Swift.String = #file, function: Swift.String = #function, line: Swift.Int = #line, separator: Swift.String = "|", terminator: Swift.String = "")
+public func v2xErrorPrint(_ items: Swift.String..., filename: Swift.String = #file, function: Swift.String = #function, line: Swift.Int = #line, separator: Swift.String = "|", terminator: Swift.String = "")
+public func v2xInfoPrint(_ items: Swift.String..., filename: Swift.String = #file, function: Swift.String = #function, line: Swift.Int = #line, separator: Swift.String = "|", terminator: Swift.String = "")
+public func v2xUnitTestsPrint(_ items: Swift.String..., filename: Swift.String = #file, function: Swift.String = #function, line: Swift.Int = #line, separator: Swift.String = "|", terminator: Swift.String = "")
+public func v2xPrint(_ items: Swift.String..., type: VodafoneV2X.CoreLogging = .info, filename: Swift.String = #file, function: Swift.String = #function, line: Swift.Int = #line, separator: Swift.String = "|", terminator: Swift.String = "", logger: os.OSLog = OSLog.coreLogging)
+@_inheritsConvenienceInitializers @objc public class SwiftLogger : ObjectiveC.NSObject {
+  @objc public static func vdfObjc(print: Swift.String, filename: Swift.String = #file, function: Swift.String = #function, line: Swift.Int = #line)
+  @objc public static func vdfObjcDebug(print: Swift.String, filename: Swift.String = #file, function: Swift.String = #function, line: Swift.Int = #line)
+  @objc override dynamic public init()
+  @objc deinit
+}
+public enum CoreLogging : Swift.Int {
+  case debug
+  case info
+  case network
+  case mqtt
+  case uiApplication
+  case unitTests
+  case warning
+  case error
+  case fault
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public var V2XLibVersion: Swift.String {
+  get
+}
+public struct IVIMRecord : Swift.Equatable, VodafoneV2X.EventObjectValidity, VodafoneV2X.ETSICancellable, Swift.Identifiable, VodafoneV2X.RecordsInitialiser {
+  public var validity: Foundation.TimeInterval
+  public let stationID: Swift.UInt
+  public let countryCode: Swift.String
+  public let providerIdentifier: Swift.UInt
+  public let iviIdentNumber: Swift.UInt
+  public let timeStamp: Foundation.Date?
+  public let validFrom: Foundation.Date?
+  public let validTo: Foundation.Date?
+  public let iviStatus: VodafoneV2X.IVIStatus
+  public let referencePosition: VodafoneV2X.ReferencePosition?
+  public let roadSigns: [VodafoneV2X.RoadSignElement]?
+  public var canceled: Swift.Bool {
+    get
+  }
+  public var id: Swift.UInt {
+    get
+  }
+  public static func record(from data: Foundation.Data?) -> VodafoneV2X.IVIMRecord?
+  public static func == (lhs: VodafoneV2X.IVIMRecord, rhs: VodafoneV2X.IVIMRecord) -> Swift.Bool
+  public typealias ID = Swift.UInt
+}
+public struct RoadSignElement {
+  public let direction: VodafoneV2X.V2XDirection?
+  public let iviType: VodafoneV2X.IVIType
+  public let relevanceZones: [VodafoneV2X.IVIMZone]?
+  public let detectionZones: [VodafoneV2X.IVIMZone]?
+  public let applicableLanes: [Swift.Int]?
+  public let iso14823RoadSigns: [VodafoneV2X.RoadSign14823]?
+  public let extraTexts: [Swift.String]?
+}
+public struct IVIMZone {
+  public let zoneId: Swift.UInt
+  public let heading: CoreLocation.CLLocationDirection?
+  public let path: [CoreLocation.CLLocationCoordinate2D]?
+  public let polygon: MapKit.MKPolygon?
+}
+public struct ReferencePosition {
+  public let latitude: CoreLocation.CLLocationDegrees
+  public let longitude: CoreLocation.CLLocationDegrees
+}
+public struct MQTTSubServiceGroup : Swift.Codable {
+  public let publish: Swift.String
+  public let subscribe: Swift.String
+  public init(publish: Swift.String = "public", subscribe: Swift.String = "public")
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+@_hasMissingDesignatedInitializers public class DynamicMQTTList<ListSource, InnerObject> : VodafoneV2X.MQTTListBindable where ListSource : VodafoneV2X.MQTTListSource, InnerObject : VodafoneV2X.MQTTEventObject {
+  public var list: [InnerObject] {
+    get
+  }
+  public var latest: InnerObject.Object? {
+    get
+  }
+  public var listChanged: Combine.AnyPublisher<[InnerObject], Swift.Never> {
+    get
+  }
+  public var zoneChanged: Combine.AnyPublisher<VodafoneV2X.DynamicZone, Swift.Never>? {
+    get
+  }
+  public var tileSize: Swift.Int {
+    get
+  }
+  @Combine.Published @_projectedValueProperty($isActive) public var isActive: Swift.Bool {
+    get
+  }
+  public var $isActive: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  public var isActiveListener: Combine.AnyPublisher<Swift.Bool, Swift.Never> {
+    get
+  }
+  @objc deinit
+}
+extension VodafoneV2X.DynamicMQTTList where ListSource : VodafoneV2X.SourceUpdateable {
+  public func updateObject(_ msgUpdate: VodafoneV2X.V2XMessageUpdater)
+  public func cancelObject(_ sequenceNumber: Swift.UInt)
+  public func publish(_ objectV2X: VodafoneV2X.UPEREncodable, location: CoreLocation.CLLocation? = nil, heading: CoreLocation.CLHeading? = nil, qos: VodafoneV2X.QoSType = .qos0, completion: ((_ seqNumber: Swift.UInt) -> Swift.Void)?)
+}
+public typealias ITSLocationsListProvider = VodafoneV2X.DynamicList<VodafoneV2X.GNSSReceiverService, VodafoneV2X.V2XLocation>
+public typealias CAMListProvider = VodafoneV2X.DynamicMQTTList<VodafoneV2X.CAMService, VodafoneV2X.V2XCAM>
+public typealias DENMListProvider = VodafoneV2X.DynamicMQTTList<VodafoneV2X.DENMService, VodafoneV2X.V2XDENM>
+public typealias IVIMListProvider = VodafoneV2X.DynamicMQTTList<VodafoneV2X.IVIMService, VodafoneV2X.V2XIVIM>
+public typealias SPATEMListProvider = VodafoneV2X.DynamicMQTTList<VodafoneV2X.SPATEMService, VodafoneV2X.V2XSPATEM>
+public typealias MAPEMListProvider = VodafoneV2X.DynamicMQTTList<VodafoneV2X.MAPEMService, VodafoneV2X.V2XMAPEM>
+public typealias VAMListProvider = VodafoneV2X.DynamicMQTTList<VodafoneV2X.VAMService, VodafoneV2X.V2XVAM>
+@_hasMissingDesignatedInitializers public class MQTTManager : VodafoneV2X.MQTTProtocol {
+  public var isActive: Swift.Bool {
+    get
+  }
+  public var isActiveListener: Combine.AnyPublisher<Swift.Bool, Swift.Never> {
+    get
+  }
+  public var connectionState: Combine.AnyPublisher<VodafoneV2X.MQTTConnectionState, Swift.Never> {
+    get
+  }
+  public var getServiceAreaID: Swift.String {
+    get
+  }
+  public var serviceAreaChanged: Combine.AnyPublisher<VodafoneV2X.ServiceAreaReconnectionIDs, Swift.Never> {
+    get
+  }
+  @objc deinit
+}
+extension VodafoneV2X.MQTTManager : VodafoneV2X.TopicSubscription {
+  public func unsubscribe(topic: VodafoneV2X.V2XMQTTTopic)
+  public func unsubscribe(topics: [VodafoneV2X.V2XMQTTTopic])
+}
+extension VodafoneV2X.MQTTManager : VodafoneV2X.MQTTMessaging {
+  public func publish(_ message: VodafoneV2X.V2XMQTTMessage)
+}
+extension VodafoneV2X.MQTTManager : VodafoneV2X.MQTTListening {
+  public func messagePublishers(for topics: [VodafoneV2X.V2XMQTTTopic]) -> [Combine.AnyPublisher<VodafoneV2X.V2XMQTTMessage, Swift.Never>]?
+  public func messagePublisher(forTopic topic: VodafoneV2X.V2XMQTTTopic) -> Combine.AnyPublisher<VodafoneV2X.V2XMQTTMessage, Swift.Never>?
+}
+extension VodafoneV2X.MQTTManager {
+  public func retrieveServiceAreasList(_ mqttTopic: VodafoneV2X.V2XMQTTTopic, completion: @escaping (Swift.String) -> ())
+  public func updateConnectedServiceAreaID()
+}
+public struct V2XMAPEM : VodafoneV2X.MQTTEventObject {
+  public var topic: VodafoneV2X.V2XMQTTTopic
+  public var object: VodafoneV2X.MAPEMRecord?
+  public init(topic: VodafoneV2X.V2XMQTTTopic, object: VodafoneV2X.MAPEMRecord?)
+  public typealias Object = VodafoneV2X.MAPEMRecord
+}
+public protocol MAPEMServiceUpdating : VodafoneV2X.ETSIServicing {
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class MAPEMService : VodafoneV2X.GenericService<VodafoneV2X.V2XMAPEM>, VodafoneV2X.MAPEMServiceUpdating {
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class DENMType : ObjectiveC.NSObject, VodafoneV2X.UPEREncodable, Foundation.NSCopying {
+  public var sequenceNumber: Swift.UInt {
+    get
+  }
+  public var cause: VodafoneV2X.CauseCodeKind {
+    get
+  }
+  public var subCause: Swift.UInt {
+    get
+  }
+  public var validityDuration: Swift.UInt {
+    get
+  }
+  public var transmissionInterval: Swift.UInt {
+    get
+  }
+  public var relevantDistance: Swift.UInt {
+    get
+  }
+  public var eventHistoryList: [CoreLocation.CLLocation]? {
+    get
+  }
+  public var eventTracesList: [CoreLocation.CLLocation]? {
+    get
+  }
+  convenience public init?<EnumObject>(cause: EnumObject, validityDuration: Swift.UInt = 40, transmissionInterval: Swift.UInt = 500, relevantDistance: Swift.UInt = 200) where EnumObject : VodafoneV2X.DENMCauseAndSubCause
+  convenience public init?<EnumObject>(cause: EnumObject, validityDuration: Swift.UInt = 40, transmissionInterval: Swift.UInt = 500, relevantDistance: Swift.UInt = 200, eventHistoryList: [CoreLocation.CLLocation]?) where EnumObject : VodafoneV2X.DENMCauseAndSubCause
+  convenience public init?<EnumObject>(cause: EnumObject, validityDuration: Swift.UInt = 40, transmissionInterval: Swift.UInt = 500, relevantDistance: Swift.UInt = 200, eventHistoryList: [CoreLocation.CLLocation]?, eventTracesList: [CoreLocation.CLLocation]?) where EnumObject : VodafoneV2X.DENMCauseAndSubCause
+  public func updateDENM(validityDuration: Swift.UInt? = nil, transmissionInterval: Swift.UInt? = nil, relevantDistance: Swift.UInt? = nil)
+  @objc public func encoded() -> Foundation.Data?
+  @objc public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc deinit
+}
+public struct DENMUpdateObj : VodafoneV2X.V2XMessageUpdater {
+  public let sequenceNumber: Swift.UInt
+  public let validityDuration: Swift.UInt?
+  public let transmissionInterval: Swift.UInt?
+  public let relevantDistance: Swift.UInt?
+  public let location: CoreLocation.CLLocation?
+  public init?(sequenceNumber: Swift.UInt, validityDuration: Swift.UInt?, txInterval: Swift.UInt?, relevantDistance: Swift.UInt?, location: CoreLocation.CLLocation?)
+}
+public let trafficConditionUnavailable: VodafoneV2X.DENMType
+public let queueAhead: VodafoneV2X.DENMType
+public let accident: VodafoneV2X.DENMType
+public let roadworksUnavailable: VodafoneV2X.DENMType
+public let roadworksMajor: VodafoneV2X.DENMType
+public let roadworksRoadMarkingWork: VodafoneV2X.DENMType
+public let roadworksMovingRoadMaintenance: VodafoneV2X.DENMType
+public let roadworksShortTermStationaryRoadworks: VodafoneV2X.DENMType
+public let roadworksStreetCleaning: VodafoneV2X.DENMType
+public let roadworksWinterService: VodafoneV2X.DENMType
+public let adverseWeatherConditionAdhesion: VodafoneV2X.DENMType
+public let hazardousLocationSurfaceCondition: VodafoneV2X.DENMType
+public let hazardousLocationObstacleOnTheRoad: VodafoneV2X.DENMType
+public let hazardousLocationAnimalOnTheRoad: VodafoneV2X.DENMType
+public let humanPresenceOnTheRoad: VodafoneV2X.DENMType
+public let wrongWayDriving: VodafoneV2X.DENMType
+public let rescueAndRecoveryWorkInProgress: VodafoneV2X.DENMType
+public let adverseWeatherConditionExtremeWeatherCondition: VodafoneV2X.DENMType
+public let adverseWeatherConditionVisibility: VodafoneV2X.DENMType
+public let slowVehicle: VodafoneV2X.DENMType
+public let dangerousEndOfQueue: VodafoneV2X.DENMType
+public let vehicleBreakDown: VodafoneV2X.DENMType
+public let vehicleBreakDownLackOfFuel: VodafoneV2X.DENMType
+public let vehicleBreakDownLackOfBattery: VodafoneV2X.DENMType
+public let vehicleBreakDownEngineProblem: VodafoneV2X.DENMType
+public let vehicleBreakDownTransmissionProblem: VodafoneV2X.DENMType
+public let vehicleBreakDownEngineCoolingProblem: VodafoneV2X.DENMType
+public let vehicleBreakDownBrakingSystemProblem: VodafoneV2X.DENMType
+public let vehicleBreakDownSteeringProblem: VodafoneV2X.DENMType
+public let vehicleBreakDownTyrePuncture: VodafoneV2X.DENMType
+public let postCrash: VodafoneV2X.DENMType
+public let postCrashAccidentWithOutEcallTriggered: VodafoneV2X.DENMType
+public let postCrashAccidentWithEcallManuallyTriggered: VodafoneV2X.DENMType
+public let postCrashAccidentWithEcallAutomaticallyTriggered: VodafoneV2X.DENMType
+public let postCrashAccidentWithEcalTriggeredNoNetwork: VodafoneV2X.DENMType
+public let humanProblem: VodafoneV2X.DENMType
+public let humanProblemGlycaemia: VodafoneV2X.DENMType
+public let humanProblemHeart: VodafoneV2X.DENMType
+public let stationaryVehicle: VodafoneV2X.DENMType
+public let stationaryVehicleHumanProblem: VodafoneV2X.DENMType
+public let stationaryVehicleBreakdown: VodafoneV2X.DENMType
+public let stationaryVehiclePostCrash: VodafoneV2X.DENMType
+public let stationaryVehiclePublicTransportStop: VodafoneV2X.DENMType
+public let stationaryVehicleCarryingDangerousGoods: VodafoneV2X.DENMType
+public let emergencyVehicleApproachingUnavailable: VodafoneV2X.DENMType
+public let emergencyVehicleApproaching: VodafoneV2X.DENMType
+public let emergencyVehicleApproachingPrioritizedVehicle: VodafoneV2X.DENMType
+public let hazardousLocationDangerousCurve: VodafoneV2X.DENMType
+public let hazardousLocationDangerousCurveLeft: VodafoneV2X.DENMType
+public let hazardousLocationDangerousCurveRight: VodafoneV2X.DENMType
+public let hazardousLocationDangerousCurveMultiple: VodafoneV2X.DENMType
+public let hazardousLocationDangerousCurveLeftMultiple: VodafoneV2X.DENMType
+public let hazardousLocationDangerousCurveRightMultiple: VodafoneV2X.DENMType
+public let collisionRisk: VodafoneV2X.DENMType
+public let collisionRiskLongitudinal: VodafoneV2X.DENMType
+public let collisionRiskCrossing: VodafoneV2X.DENMType
+public let collisionRiskLateral: VodafoneV2X.DENMType
+public let collisionRiskVru: VodafoneV2X.DENMType
+public let signalViolation: VodafoneV2X.DENMType
+public let signalViolationStopSign: VodafoneV2X.DENMType
+public let signalViolationTrafficLight: VodafoneV2X.DENMType
+public let signalViolationTurningRegulation: VodafoneV2X.DENMType
+public let dangerousSituation: VodafoneV2X.DENMType
+public let dangerousSituationEmergencyElectronicBreakeLights: VodafoneV2X.DENMType
+public let dangerousSituationPreCrashSystemActivated: VodafoneV2X.DENMType
+public let dangerousSituationESPAactivated: VodafoneV2X.DENMType
+public let dangerousSituationABSActivated: VodafoneV2X.DENMType
+public let dangerousSituationAEBActivated: VodafoneV2X.DENMType
+public let dangerousSituationBreakWarningActivated: VodafoneV2X.DENMType
+public let dangerousSituationcollisionRiskWarningActivated: VodafoneV2X.DENMType
+@_hasMissingDesignatedInitializers final public class DynamicList<ListSource, InnerObject> : VodafoneV2X.ListBindable where ListSource : VodafoneV2X.DynamicListSource, InnerObject : VodafoneV2X.EventObject {
+  final public var list: [InnerObject] {
+    get
+  }
+  final public var latest: InnerObject.Object? {
+    get
+  }
+  final public var listChanged: Combine.AnyPublisher<[InnerObject], Swift.Never> {
+    get
+  }
+  @Combine.Published @_projectedValueProperty($isActive) final public var isActive: Swift.Bool {
+    get
+  }
+  final public var $isActive: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  final public var isActiveListener: Combine.AnyPublisher<Swift.Bool, Swift.Never> {
+    get
+  }
+  @discardableResult
+  final public func startListUpdates(for service: VodafoneV2X.ServiceConsumer) -> Swift.Bool
+  @discardableResult
+  final public func stopListUpdates(for service: VodafoneV2X.ServiceConsumer) -> Swift.Bool
+  @objc deinit
+}
+@objc public protocol TrafficLighMovement {
+  @objc var minTime: Foundation.TimeInterval { get }
+  @objc var trafficLightState: VodafoneV2X.V2XTrafficLighState { get }
+}
+public protocol TrafficLightMovementOptionals : VodafoneV2X.TrafficLighMovement {
+  var likelyTime: Foundation.TimeInterval? { get }
+  var confidence: Swift.Int? { get }
+}
+@objc public class TrafficLighMovementImpl : ObjectiveC.NSObject, VodafoneV2X.TrafficLightMovementOptionals {
+  final public let likelyTime: Foundation.TimeInterval?
+  @objc final public let minTime: Foundation.TimeInterval
+  final public let confidence: Swift.Int?
+  @objc final public let trafficLightState: VodafoneV2X.V2XTrafficLighState
+  @objc public init(likelyTime: Swift.Int, minTime: Foundation.TimeInterval, confidence: Swift.Int, trafficLightState: VodafoneV2X.V2XTrafficLighState)
+  @objc deinit
+}
+public protocol ETSIServicing : AnyObject {
+  var tileSize: Swift.Int { get }
+  var isActive: Swift.Bool { get }
+  var isActiveListener: Combine.AnyPublisher<Swift.Bool, Swift.Never> { get }
+  var zoneChanged: Combine.AnyPublisher<VodafoneV2X.DynamicZone, Swift.Never>? { get }
+  @discardableResult
+  func start() -> Swift.Bool
+  @discardableResult
+  func stop() -> Swift.Bool
+}
+extension CoreLocation.CLLocationCoordinate2D : Swift.Equatable {
+  public static func == (lhs: CoreLocation.CLLocationCoordinate2D, rhs: CoreLocation.CLLocationCoordinate2D) -> Swift.Bool
+}
+@_inheritsConvenienceInitializers @objc final public class IVIMConstants : ObjectiveC.NSObject {
+  @objc public static var protocolVersion: VodafoneV2X.ProtocolVersion {
+    @objc get
+  }
+  @objc public static var messageID: VodafoneV2X.MessageID {
+    @objc get
+  }
+  @objc public static var stationID: Swift.UInt {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc final public class IVIManagementContainerConstants : ObjectiveC.NSObject {
+  @objc public static var countryCode: Swift.UInt {
+    @objc get
+  }
+  @objc public static var idNumber: Swift.UInt {
+    @objc get
+  }
+  @objc public static var providerID: Swift.UInt {
+    @objc get
+  }
+  @objc public static var iviStatus: VodafoneV2X.IVIStatus {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+public struct V2XVehicleDimentions : Swift.Codable {
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct V2XSDKLogsModel : Swift.Codable {
+  public enum LogLevel : Swift.String, Swift.Codable {
+    case debug
+    case info
+    case warning
+    case error
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public let logLevel: VodafoneV2X.V2XSDKLogsModel.LogLevel
+  public let fileLogLevel: VodafoneV2X.V2XSDKLogsModel.LogLevel?
+  public var writeLogsToFile: Swift.Bool
+  public init(logLevel: VodafoneV2X.V2XSDKLogsModel.LogLevel = .debug, fileLogLevel: VodafoneV2X.V2XSDKLogsModel.LogLevel? = nil)
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public protocol DENMCauseAndSubCause : Swift.RawRepresentable where Self.RawValue == Swift.UInt {
+}
+public enum TrafficCondition : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case increasedVolumeOfTraffic
+  case trafficJamSlowlyIncreasing
+  case trafficJamIncreasing
+  case trafficJamStronglyIncreasing
+  case trafficStationary
+  case trafficJamSlightlyDecreasing
+  case trafficJamDecreasing
+  case trafficJamStronglyDecreasing
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum Accident : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case multiVehicleAccident
+  case heavyAccident
+  case accidentInvolvingLorry
+  case accidentInvolvingBus
+  case accidentInvolvingHazardousMaterials
+  case accidentOnOppositeLane
+  case unsecuredAccident
+  case assistanceRequested
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum Roadworks : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case majorRoadworks
+  case roadMarkingWork
+  case slowMovingRoadMaintenance
+  case shortTermStationaryRoadworks
+  case streetCleaning
+  case winterService
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum AdverseWeatherConditionAdhesion : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case heavyFrostOnRoad
+  case fuelOnRoad
+  case mudOnRoad
+  case snowOnRoad
+  case iceOnRoad
+  case blackIceOnRoad
+  case oilOnRoad
+  case looseChippings
+  case instantBlackIce
+  case roadsSalted
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum HazardousLocationSurfaceCondition : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case rockfalls
+  case earthquakeDamage
+  case sewerCollapse
+  case subsidence
+  case snowDrifts
+  case stormDamage
+  case burstPipe
+  case volcanoEruption
+  case fallingIce
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum HazardousLocationObstacleOnTheRoad : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case shedLoad
+  case partsOfVehicles
+  case partsOfTyres
+  case bigObjects
+  case fallenTrees
+  case hubCaps
+  case waitingVehicles
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum HazardousLocationAnimalOnTheRoad : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case wildAnimals
+  case herdOfAnimals
+  case smallAnimals
+  case largeAnimals
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum HumanPresenceOnTheRoad : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case childrenOnRoadway
+  case cyclistOnRoadway
+  case motorcyclistOnRoadway
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum WrongWayDriving : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case wrongLane
+  case wrongDirection
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum RescueAndRecoveryWorkInProgress : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case emergencyVehicles
+  case rescueHelicopterLanding
+  case policeActivityOngoing
+  case medicalEmergencyOngoing
+  case childAbductionInProgress
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum AdverseWeatherConditionExtremeWeatherCondition : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case strongWinds
+  case damagingHail
+  case hurricane
+  case thunderstorm
+  case tornado
+  case blizzard
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum AdverseWeatherConditionVisibility : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case fog
+  case smoke
+  case heavySnowfall
+  case heavyRain
+  case heavyHail
+  case lowSunGlare
+  case sandstorms
+  case swarmsOfInsects
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum AdverseWeatherConditionPrecipitation : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case heavyRain
+  case heavySnowfall
+  case softHail
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum SlowVehicle : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case maintenanceVehicle
+  case vehiclesSlowingToLookAtAccident
+  case abnormalLoad
+  case abnormalWideLoad
+  case convoy
+  case snowplough
+  case deicing
+  case saltingVehicles
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum DangerousEndOfQueue : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case suddenEndOfQueue
+  case queueOverHill
+  case queueAroundBend
+  case queueInTunnel
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum VehicleBreakdown : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case lackOfFuel
+  case lackOfBatteryPower
+  case engineProblem
+  case transmissionProblem
+  case engineCoolingProblem
+  case brakingSystemProblem
+  case steeringProblem
+  case tyrePuncture
+  case tyrePressureProblem
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum PostCrash : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case accidentWithoutECallTriggered
+  case accidentWithECallManuallyTriggered
+  case accidentWithECallAutomaticallyTriggered
+  case accidentWithECallTriggeredWithoutAccessToCellularNetwork
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum HumanProblem : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case glycemiaProblem
+  case heartProblem
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum StationaryVehicle : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case humanProblem
+  case vehicleBreakdown
+  case postCrash
+  case publicTransportStop
+  case carryingDangerousGoods
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum EmergencyVehicleApproaching : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case emergencyVehicleApproaching
+  case prioritizedVehicleApproaching
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum HazardousLocationDangerousCurve : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case dangerousLeftTurnCurve
+  case dangerousRightTurnCurve
+  case multipleCurvesStartingWithUnknownTurningDirection
+  case multipleCurvesStartingWithLeftTurn
+  case multipleCurvesStartingWithRightTurn
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum CollisionRisk : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case longitudinalCollisionRisk
+  case crossingCollisionRisk
+  case lateralCollisionRisk
+  case vulnerableRoadUser
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum SignalViolation : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case stopSignViolation
+  case trafficLightViolation
+  case turningRegulationViolation
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum DangerousSituation : Swift.UInt, VodafoneV2X.DENMCauseAndSubCause {
+  case unavailable
+  case emergencyElectronicBrakeEngaged
+  case preCrashSystemEngaged
+  case espEngaged
+  case absEngaged
+  case aebEngaged
+  case brakeWarningEngaged
+  case collisionRiskWarningEngaged
+  public init?(rawValue: Swift.UInt)
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum QoSType : Swift.String, Swift.Codable {
+  case qos0
+  case qos1
+  case qos2
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class GenericService<ObjectShared> : VodafoneV2X.ETSIServicing, VodafoneV2X.MQTTListSource where ObjectShared : VodafoneV2X.MQTTEventObject {
+  @Combine.Published @_projectedValueProperty($isActive) public var isActive: Swift.Bool {
+    get
+  }
+  public var $isActive: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  @objc deinit
+  public var binding: Combine.AnyPublisher<ObjectShared, Swift.Never> {
+    get
+  }
+  public var isActiveListener: Combine.AnyPublisher<Swift.Bool, Swift.Never> {
+    get
+  }
+  public var zoneChanged: Combine.AnyPublisher<VodafoneV2X.DynamicZone, Swift.Never>? {
+    get
+  }
+  public var tileSize: Swift.Int {
+    get
+  }
+  public func startZoneListener()
+  @discardableResult
+  public func start() -> Swift.Bool
+  @discardableResult
+  public func stop() -> Swift.Bool
+  public typealias InnerListObject = ObjectShared
+}
+@_inheritsConvenienceInitializers @objc final public class VAMConstants : ObjectiveC.NSObject {
+  @objc public static var protocolVersion: VodafoneV2X.ProtocolVersion {
+    get
+  }
+  @objc public static var messageID: VodafoneV2X.MessageID {
+    @objc get
+  }
+  @objc public static var stationID: Swift.UInt {
+    get
+  }
+  @objc public static var deltaTime: Swift.Int {
+    get
+  }
+  @objc public static var nextHeader: VodafoneV2X.V2XCommonNextHeader {
+    get
+  }
+  @objc public static var headerType: VodafoneV2X.V2XHeaderType {
+    get
+  }
+  @objc public static var flagsAreMobile: Swift.Bool {
+    get
+  }
+  @objc public static var stationType: VodafoneV2X.StationKind {
+    @objc get
+  }
+  @objc public static var configuration: VodafoneV2X.V2XAddrConfig {
+    @objc get
+  }
+  @objc public static var mid: Swift.UInt {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+public struct V2XSPATEM : VodafoneV2X.MQTTEventObject {
+  public var topic: VodafoneV2X.V2XMQTTTopic
+  public var object: VodafoneV2X.SPATEMRecord?
+  public init(topic: VodafoneV2X.V2XMQTTTopic, object: VodafoneV2X.SPATEMRecord?)
+  public typealias Object = VodafoneV2X.SPATEMRecord
+}
+public protocol SPATEMServiceUpdating : VodafoneV2X.ETSIServicing {
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class SPATEMService : VodafoneV2X.GenericService<VodafoneV2X.V2XSPATEM>, VodafoneV2X.SPATEMServiceUpdating {
+  @objc deinit
+}
+public struct V2XMQTTConfigurator : Swift.Codable {
+  public var stepInstance: VodafoneV2X.V2XMQTTConfigurator.STEPInstance?
+  public var ignoreHostVerification: Swift.Bool
+  public var username: Swift.String
+  public var password: Swift.String
+  public var reconnect: VodafoneV2X.V2XMQTTConfigurator.V2XReconnect
+  public struct V2XReconnect : Swift.Codable {
+    public var retry: Swift.Bool
+    public var minDelay: Swift.Int64
+    public var maxDelay: Swift.Int64
+    public init?(retry: Swift.Bool = false, minDelay: Swift.Int64 = 0, maxDelay: Swift.Int64 = 0)
+    public init(from decoder: Swift.Decoder) throws
+    public func encode(to encoder: Swift.Encoder) throws
+  }
+  public enum ProtocolVersion : Swift.String, Swift.Codable {
+    case v3
+    case v5
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public var serviceAreaHandoverConfig: VodafoneV2X.ServiceAreaHandoverConfig?
+  public init(stepInstance: VodafoneV2X.V2XMQTTConfigurator.STEPInstance? = STEPInstance.DE_PROD_FRANKFURT, username: Swift.String, pass: Swift.String, reconnect: VodafoneV2X.V2XMQTTConfigurator.V2XReconnect?, serviceAreaHandoverConfig: VodafoneV2X.ServiceAreaHandoverConfig? = nil)
+  public init(from decoder: Swift.Decoder) throws
+  public enum MQTTConfigError : Swift.Error {
+    case invalidKeychainObject
+    public static func == (a: VodafoneV2X.V2XMQTTConfigurator.MQTTConfigError, b: VodafoneV2X.V2XMQTTConfigurator.MQTTConfigError) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public struct V2XSTEPInstance : Swift.Equatable {
+    public let alias: Swift.String
+    public static func == (lhs: VodafoneV2X.V2XMQTTConfigurator.V2XSTEPInstance, rhs: VodafoneV2X.V2XMQTTConfigurator.V2XSTEPInstance) -> Swift.Bool
+  }
+  public enum STEPInstance : Swift.String, Swift.Codable {
+    case DE_PROD_FRANKFURT
+    case DE_DEV_FRANKFURT
+    case FR_TEST_IOT
+    case FR_TEST_V2X
+    case DEFAULT
+    public var instance: VodafoneV2X.V2XMQTTConfigurator.V2XSTEPInstance {
+      get
+    }
+    public static func == (lhs: VodafoneV2X.V2XMQTTConfigurator.STEPInstance, rhs: VodafoneV2X.V2XMQTTConfigurator.STEPInstance) -> Swift.Bool
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public static func getStepInstance(hostname: Swift.String, port: Swift.Int) -> VodafoneV2X.V2XMQTTConfigurator.STEPInstance?
+  public static func getStepInstanceList() -> [VodafoneV2X.V2XMQTTConfigurator.V2XSTEPInstance]
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension VodafoneV2X.V2XMQTTConfigurator : Swift.Equatable {
+  public static func == (lhs: VodafoneV2X.V2XMQTTConfigurator, rhs: VodafoneV2X.V2XMQTTConfigurator) -> Swift.Bool
+}
+public protocol ListBindable : AnyObject {
+  associatedtype ListSource : VodafoneV2X.DynamicListSource
+  associatedtype InnerObject : VodafoneV2X.EventObject
+  var list: [Self.InnerObject] { get }
+  var listChanged: Combine.AnyPublisher<[Self.InnerObject], Swift.Never> { get }
+  var latest: Self.InnerObject.Object? { get }
+  @discardableResult
+  func startListUpdates(for service: VodafoneV2X.ServiceConsumer) -> Swift.Bool
+  @discardableResult
+  func stopListUpdates(for service: VodafoneV2X.ServiceConsumer) -> Swift.Bool
+}
+public typealias BindingListChangedObject<InnerObject> = (binding: Combine.AnyPublisher<[InnerObject], Swift.Never>, topic: VodafoneV2X.V2XMQTTTopic)
+public protocol MQTTListBindable : AnyObject {
+  associatedtype ListSource : VodafoneV2X.MQTTListSource
+  associatedtype InnerObject : VodafoneV2X.MQTTEventObject
+  var list: [Self.InnerObject] { get }
+  var listChanged: Combine.AnyPublisher<[Self.InnerObject], Swift.Never> { get }
+  var zoneChanged: Combine.AnyPublisher<VodafoneV2X.DynamicZone, Swift.Never>? { get }
+  var latest: Self.InnerObject.Object? { get }
+  var tileSize: Swift.Int { get }
+}
+@_inheritsConvenienceInitializers @objc final public class BasicHeaderConstants : ObjectiveC.NSObject {
+  @objc public static var timeBase: VodafoneV2X.V2XTimeBase {
+    get
+  }
+  @objc public static var multiplier: Swift.Int {
+    get
+  }
+  @objc public static var headerVersion: Swift.Int {
+    get
+  }
+  @objc public static var nextHeader: VodafoneV2X.V2XNextHeader {
+    get
+  }
+  @objc public static var remaingHop: Swift.Int {
+    get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+public protocol TopicSubscription {
+  func unsubscribe(topic: VodafoneV2X.V2XMQTTTopic)
+  func unsubscribe(topics: [VodafoneV2X.V2XMQTTTopic])
+}
+public protocol MQTTMessaging {
+  func publish(_ message: VodafoneV2X.V2XMQTTMessage)
+}
+public protocol MQTTListening {
+  func messagePublishers(for topics: [VodafoneV2X.V2XMQTTTopic]) -> [Combine.AnyPublisher<VodafoneV2X.V2XMQTTMessage, Swift.Never>]?
+  func messagePublisher(forTopic topic: VodafoneV2X.V2XMQTTTopic) -> Combine.AnyPublisher<VodafoneV2X.V2XMQTTMessage, Swift.Never>?
+}
+public protocol MQTTProtocol : AnyObject, VodafoneV2X.MQTTListening, VodafoneV2X.MQTTMessaging, VodafoneV2X.MQTTReconnectionProtocol, VodafoneV2X.MQTTStateUpdating, VodafoneV2X.TopicSubscription {
+}
+public protocol MQTTStateUpdating {
+  var isActive: Swift.Bool { get }
+  var isActiveListener: Combine.AnyPublisher<Swift.Bool, Swift.Never> { get }
+  var connectionState: Combine.AnyPublisher<VodafoneV2X.MQTTConnectionState, Swift.Never> { get }
+}
+public protocol MQTTReconnectionProtocol {
+  var getServiceAreaID: Swift.String { get }
+  var serviceAreaChanged: Combine.AnyPublisher<VodafoneV2X.ServiceAreaReconnectionIDs, Swift.Never> { get }
+}
+public protocol ServiceAreaUpdatingProtocol : VodafoneV2X.ServiceAreaUpdating {
+  var getServiceAreasList: VodafoneV2X.ServiceAreaModel { get }
+  var serviceAreaListChanged: Combine.AnyPublisher<VodafoneV2X.ServiceAreaModel, Swift.Never> { get }
+}
+public enum MQTTConnectionState : Swift.String {
+  public typealias RawValue = Swift.String
+  case stopped
+  case connecting
+  case connected
+  case fault
+  case disconnecting
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct ServiceAreaReconnectionIDs {
+  public var from: Swift.String {
+    get
+  }
+  public var to: Swift.String {
+    get
+  }
+}
+public struct V2XMQTTTopic : Swift.Equatable {
+  public let topic: Swift.String
+  public let qos: VodafoneV2X.QoSType
+  public let topicAlias: Swift.String
+  public let service: VodafoneV2X.ServiceConsumer
+  public init(topic: Swift.String, service: VodafoneV2X.ServiceConsumer, qos: VodafoneV2X.QoSType = .qos0, alias: Swift.String? = nil)
+  public static func == (lhs: VodafoneV2X.V2XMQTTTopic, rhs: VodafoneV2X.V2XMQTTTopic) -> Swift.Bool
+}
+public protocol KeychainAccessing {
+  func save(key: Swift.String, value: Foundation.Data)
+  func load(key: Swift.String) -> Foundation.Data?
+  func delete(key: Swift.String)
+}
+public struct CAMRecord : Swift.Equatable, VodafoneV2X.EventObjectValidity, Swift.Identifiable, VodafoneV2X.RecordsInitialiser {
+  public let stationID: Swift.UInt
+  public let stationType: VodafoneV2X.StationKind
+  public let vehicleRole: VodafoneV2X.V2XVehicleRole
+  public let coordinate: CoreLocation.CLLocationCoordinate2D
+  public let speedKmH: CoreLocation.CLLocationSpeed
+  public let headingDegrees: Swift.Float
+  public let validity: Foundation.TimeInterval
+  public let vehicleWidth: ObjectiveC.NSInteger
+  public let vehicleLength: ObjectiveC.NSInteger
+  public let timeStamp: Foundation.TimeInterval
+  public var id: Swift.UInt {
+    get
+  }
+  public static func record(from data: Foundation.Data?) -> VodafoneV2X.CAMRecord?
+  public static func == (lhs: VodafoneV2X.CAMRecord, rhs: VodafoneV2X.CAMRecord) -> Swift.Bool
+  public typealias ID = Swift.UInt
+}
+public struct ServiceAreaModel : Swift.Codable {
+  public let version: Swift.String?, creationDate: Swift.String?, defaultServiceAreaId: Swift.String?
+  public let serviceAreas: [VodafoneV2X.ServiceArea]?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ServiceArea : Swift.Codable {
+  public let id: Swift.String?, name: Swift.String?, hostname: Swift.String?, wavelengthHostname: Swift.String?
+  public let port: Swift.Int?
+  public let areas: [VodafoneV2X.Area]?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct Area : Swift.Codable {
+  public let areaName: Swift.String?
+  public let topRight: [Swift.Double]?, bottomLeft: [Swift.Double]?
+  public let polygon: [[Swift.Double]]?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct V2XClientFactory {
+}
+public struct RxTxRoles : Swift.Codable {
+  public let receivingIsActive: Swift.Bool
+  public let transmittingIsActive: Swift.Bool
+  public init(tx: Swift.Bool = true, rx: Swift.Bool = true)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ServiceConfiguration : VodafoneV2X.ServiceConfigProtocol {
+  public let expiration: Foundation.TimeInterval
+  public let subServiceGroup: VodafoneV2X.MQTTSubServiceGroup?
+  public let txRxRole: VodafoneV2X.RxTxRoles?
+  public init(expiration: Foundation.TimeInterval, subServiceGroup: VodafoneV2X.MQTTSubServiceGroup? = nil, txRxRole: VodafoneV2X.RxTxRoles? = nil)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ListServices : Swift.Codable {
+  public let location: VodafoneV2X.ServiceConfiguration?
+  public let cam: VodafoneV2X.ServiceConfiguration?
+  public let denm: VodafoneV2X.ServiceConfiguration?
+  public let ivim: VodafoneV2X.ServiceConfiguration?
+  public let mapem: VodafoneV2X.ServiceConfiguration?
+  public let spatem: VodafoneV2X.ServiceConfiguration?
+  public let vam: VodafoneV2X.ServiceConfiguration?
+  public init(location: VodafoneV2X.ServiceConfiguration?, cam: VodafoneV2X.ServiceConfiguration?, denm: VodafoneV2X.ServiceConfiguration?, ivim: VodafoneV2X.ServiceConfiguration?, mapem: VodafoneV2X.ServiceConfiguration?, spatem: VodafoneV2X.ServiceConfiguration?, vam: VodafoneV2X.ServiceConfiguration?)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct V2XConfigurator : Swift.Codable {
+  public var mqtt: VodafoneV2X.V2XMQTTConfigurator
+  public let services: VodafoneV2X.ListServices?
+  public let logs: VodafoneV2X.V2XSDKLogsModel
+  public let vehicleDimentions: VodafoneV2X.V2XVehicleDimentions?
+  public var gnssEmulationEndPoint: VodafoneV2X.GnssEmulationEndPointModel?
+  public init(mqtt: VodafoneV2X.V2XMQTTConfigurator, services: VodafoneV2X.ListServices? = nil, logs: VodafoneV2X.V2XSDKLogsModel? = nil, vehicleDimentions: VodafoneV2X.V2XVehicleDimentions? = nil, gnssEmulationEndPoint: VodafoneV2X.GnssEmulationEndPointModel? = nil)
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct GeoHashingAlgorithms {
+  public init?(cam: VodafoneV2X.DynamicZoneProvider? = nil, denm: VodafoneV2X.DynamicZoneProvider? = nil, ivim: VodafoneV2X.DynamicZoneProvider? = nil, mapem: VodafoneV2X.DynamicZoneProvider? = nil, spatem: VodafoneV2X.DynamicZoneProvider? = nil, vam: VodafoneV2X.DynamicZoneProvider? = nil)
+}
+public struct ServiceAreaHandoverConfig : Swift.Codable {
+  public var isEnabled: Swift.Bool
+  public var distanceThreshold: Swift.Double?
+  public var durationThreshold: Swift.Int?
+  public var subscriptionTopic: Swift.String?
+  public init?(isEnabled: Swift.Bool, distanceThreshold: Swift.Double? = nil, durationThreshold: Swift.Int? = nil, subscriptionTopic: Swift.String? = nil)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public protocol DynamicZoneProvider : AnyObject {
+  var latest: VodafoneV2X.DynamicZone? { get }
+  var tileSize: Swift.Int { get }
+  var zoneChanged: Combine.AnyPublisher<VodafoneV2X.DynamicZone, Swift.Never> { get }
+  @available(iOS 1.2.1, *)
+  func locationChanged(_ location: VodafoneV2X.V2XLocation)
+  @available(iOS, introduced: 1.1.5, deprecated: 1.2.1, message: "Use locationChanged(_ location: V2XLocation) instead")
+  func locationListChanged(_ locations: [VodafoneV2X.V2XLocation])
+  func reloadDZA()
+  func handleServiceArea(_ location: CoreLocation.CLLocation)
+}
+extension VodafoneV2X.DynamicZoneProvider {
+  public func locationListChanged(_ locations: [VodafoneV2X.V2XLocation])
+}
+@_hasMissingDesignatedInitializers public class BasicDynamicZone {
+  public var tileSize: Swift.Int {
+    get
+  }
+  public var latest: VodafoneV2X.DynamicZone? {
+    get
+  }
+  public var zoneChanged: Combine.AnyPublisher<VodafoneV2X.DynamicZone, Swift.Never> {
+    get
+  }
+  @objc deinit
+}
+extension VodafoneV2X.BasicDynamicZone : VodafoneV2X.DynamicZoneProvider {
+  public func handleServiceArea(_ location: CoreLocation.CLLocation)
+  public func reloadDZA()
+  public func locationChanged(_ location: VodafoneV2X.V2XLocation)
+  public func handleServiceArea(cllocation: CoreLocation.CLLocation)
+}
+@objc public protocol Maneuver {
+  @objc var maneuverType: VodafoneV2X.V2XManeuver { get }
+  @objc var lane: Swift.Int { get }
+}
+public protocol ManeuverOptionals : VodafoneV2X.Maneuver {
+  var signalGroup: Swift.Int? { get }
+  var connectionID: Swift.Int? { get }
+}
+@objc public enum V2XManeuver : Swift.Int {
+  case turnLeft
+  case turnRight
+  case straight
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public class ManeuverImpl : ObjectiveC.NSObject, VodafoneV2X.ManeuverOptionals {
+  @objc final public let maneuverType: VodafoneV2X.V2XManeuver
+  final public let signalGroup: Swift.Int?
+  @objc final public let lane: Swift.Int
+  final public let connectionID: Swift.Int?
+  @objc public init(maneuverType: VodafoneV2X.V2XAllowedManeuver, signalGroup: Swift.Int, lane: Swift.Int, connectionID: Swift.Int)
+  @objc deinit
+}
+@objc public protocol GenericLane {
+  @objc var laneID: Swift.Int { get }
+  @objc var name: Swift.String? { get }
+  @objc var laneDirection: VodafoneV2X.V2XLaneDirection { get }
+  @objc var lanePath: [CoreLocation.CLLocationCoordinate2D] { get }
+  @objc var laneType: VodafoneV2X.V2XLaneType { get }
+  @objc var refPoint: CoreLocation.CLLocationCoordinate2D { get }
+  @objc var connectingLaneIDs: [Swift.Int] { get }
+  @objc var intersectionID: Swift.Int { get }
+}
+public protocol GenericLaneOptionals : VodafoneV2X.GenericLane {
+  var intersectionRegion: Swift.Int? { get }
+  var maneuvers: [VodafoneV2X.ManeuverOptionals]? { get }
+}
+@objc public class GenericLaneImpl : ObjectiveC.NSObject, VodafoneV2X.GenericLaneOptionals {
+  @objc final public let laneID: Swift.Int
+  @objc final public let name: Swift.String?
+  @objc final public let laneDirection: VodafoneV2X.V2XLaneDirection
+  @objc final public let lanePath: [CoreLocation.CLLocationCoordinate2D]
+  final public let maneuvers: [VodafoneV2X.ManeuverOptionals]?
+  @objc final public let laneType: VodafoneV2X.V2XLaneType
+  @objc final public let refPoint: CoreLocation.CLLocationCoordinate2D
+  @objc public var connectingLaneIDs: [Swift.Int]
+  final public let polygon: MapKit.MKPolygon?
+  @objc public var intersectionID: Swift.Int
+  public var intersectionRegion: Swift.Int?
+  public var computedLane: VodafoneV2X.ComputedLaneOptionals?
+  public var nodeList: [VodafoneV2X.NodeOffset]?
+  @objc public init(laneID: Swift.Int, name: Swift.String?, laneDirection: VodafoneV2X.V2XLaneDirection, nodeList: [VodafoneV2X.NodeOffset], computedLane: VodafoneV2X.ComputedLaneImpl, maneuvers: [VodafoneV2X.ManeuverImpl]?, laneType: VodafoneV2X.V2XLaneType, refPoint: CoreLocation.CLLocationCoordinate2D, connectingLaneIDs: [Swift.Int], intersectionID: Swift.Int, intersectionRegion: Swift.Int)
+  @objc deinit
+}
+@objc public protocol IntersectionGeometry {
+  @objc var laneSet: [VodafoneV2X.GenericLane] { get }
+  @objc var intersectionID: Swift.Int { get }
+}
+public protocol IntersectionGeometryOptionals : VodafoneV2X.IntersectionGeometry {
+  var intersectionRegion: Swift.Int? { get }
+}
+@objc public class IntersectionGeometryImpl : ObjectiveC.NSObject, VodafoneV2X.IntersectionGeometryOptionals {
+  @objc final public let laneSet: [VodafoneV2X.GenericLane]
+  @objc final public let intersectionID: Swift.Int
+  final public let intersectionRegion: Swift.Int?
+  @objc public init(laneSet: [VodafoneV2X.GenericLaneImpl], intersectionID: Swift.Int, intersectionRegion: Swift.Int)
+  @objc deinit
+}
+@objc public protocol NodeOffset {
+  @objc var deltaX: CoreLocation.CLLocationDistance { get }
+  @objc var deltaY: CoreLocation.CLLocationDistance { get }
+}
+@objc public class NodeOffsetImpl : ObjectiveC.NSObject, VodafoneV2X.NodeOffset {
+  @objc final public let deltaX: CoreLocation.CLLocationDistance
+  @objc final public let deltaY: CoreLocation.CLLocationDistance
+  @objc public init(deltaX: CoreLocation.CLLocationDistance, deltaY: CoreLocation.CLLocationDistance)
+  @objc deinit
+}
+@objc public class DrivenLineOffsetImpl : ObjectiveC.NSObject {
+  final public let present: VodafoneV2X.V2XDrivenLineOffset
+  final public let choice: Swift.Int
+  @objc public init(present: VodafoneV2X.V2XDrivenLineOffset, choice: Swift.Int)
+  @objc deinit
+}
+@objc public protocol ComputedLane {
+  @objc var referenceLaneId: Swift.Int { get }
+  @objc var offsetXaxis: VodafoneV2X.DrivenLineOffsetImpl { get }
+  @objc var offsetYaxis: VodafoneV2X.DrivenLineOffsetImpl { get }
+}
+public protocol ComputedLaneOptionals : VodafoneV2X.ComputedLane {
+  var rotateXY: Swift.Int? { get }
+  var scaleXaxis: Swift.Int? { get }
+  var scaleYaxis: Swift.Int? { get }
+  var computedPath: [CoreLocation.CLLocationCoordinate2D]? { get }
+  var laneDirection: VodafoneV2X.V2XLaneDirection? { get }
+}
+@objc public class ComputedLaneImpl : ObjectiveC.NSObject, VodafoneV2X.ComputedLaneOptionals {
+  @objc public var referenceLaneId: Swift.Int
+  @objc public var offsetXaxis: VodafoneV2X.DrivenLineOffsetImpl
+  @objc public var offsetYaxis: VodafoneV2X.DrivenLineOffsetImpl
+  public var rotateXY: Swift.Int?
+  public var scaleXaxis: Swift.Int?
+  public var scaleYaxis: Swift.Int?
+  public var computedPath: [CoreLocation.CLLocationCoordinate2D]?
+  public var laneDirection: VodafoneV2X.V2XLaneDirection?
+  @objc public init(referenceLaneId: Swift.Int, offsetXaxis: VodafoneV2X.DrivenLineOffsetImpl, offsetYaxis: VodafoneV2X.DrivenLineOffsetImpl, rotateXY: Swift.Int, scaleXaxis: Swift.Int, scaleYaxis: Swift.Int)
+  public init(referenceLaneId: Swift.Int, offsetXaxis: VodafoneV2X.DrivenLineOffsetImpl, offsetYaxis: VodafoneV2X.DrivenLineOffsetImpl, rotateXY: Swift.Int?, scaleXaxis: Swift.Int?, scaleYaxis: Swift.Int?, computedPath: [CoreLocation.CLLocationCoordinate2D], laneDirection: VodafoneV2X.V2XLaneDirection)
+  @objc deinit
+}
+public struct V2XMQTTMessage : Swift.Equatable {
+  public let topic: Swift.String
+  public let payload: Foundation.Data
+  public let qos: VodafoneV2X.QoSType
+  public let service: VodafoneV2X.ServiceConsumer
+  public init(payload: Foundation.Data, topic: Swift.String, qos: VodafoneV2X.QoSType, service: VodafoneV2X.ServiceConsumer)
+  public static func == (lhs: VodafoneV2X.V2XMQTTMessage, rhs: VodafoneV2X.V2XMQTTMessage) -> Swift.Bool
+}
+@_inheritsConvenienceInitializers @objc final public class LPVConstants : ObjectiveC.NSObject {
+  @objc public static var tst: Foundation.Date {
+    get
+  }
+  @objc public static var latitude: CoreLocation.CLLocationDegrees {
+    @objc get
+  }
+  @objc public static var longitude: CoreLocation.CLLocationDegrees {
+    @objc get
+  }
+  @objc public static var accuracy: Swift.Bool {
+    get
+  }
+  @objc public static var speed: CoreLocation.CLLocationSpeed {
+    @objc get
+  }
+  @objc public static var heading: CoreLocation.CLLocationDirection {
+    @objc get
+  }
+  @objc public static var stationType: VodafoneV2X.StationKind {
+    @objc get
+  }
+  @objc public static var configuration: VodafoneV2X.V2XAddrConfig {
+    @objc get
+  }
+  @objc public static var mid: Swift.UInt {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+public enum GNAddressConstants {
+  public static var mid: Swift.UInt {
+    get
+  }
+  public static var configuration: VodafoneV2X.V2XAddrConfig {
+    get
+  }
+  public static var stationType: VodafoneV2X.StationKind {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objc final public class CAMConstants : ObjectiveC.NSObject {
+  @objc public static var protocolVersion: VodafoneV2X.ProtocolVersion {
+    get
+  }
+  @objc public static var messageID: VodafoneV2X.MessageID {
+    @objc get
+  }
+  @objc public static var stationID: Swift.UInt {
+    get
+  }
+  @objc public static var deltaTime: Swift.Int {
+    get
+  }
+  @objc public static var nextHeader: VodafoneV2X.V2XCommonNextHeader {
+    get
+  }
+  @objc public static var headerType: VodafoneV2X.V2XHeaderType {
+    get
+  }
+  @objc public static var flagsAreMobile: Swift.Bool {
+    get
+  }
+  @objc public static var stationType: VodafoneV2X.StationKind {
+    @objc get
+  }
+  @objc public static var configuration: VodafoneV2X.V2XAddrConfig {
+    @objc get
+  }
+  @objc public static var mid: Swift.UInt {
+    @objc get
+  }
+  @objc public static var vehicleWidth: ObjectiveC.NSInteger
+  @objc public static var vehicleLength: ObjectiveC.NSInteger
+  @objc public static var vehicleDefaults: [Swift.UInt : [ObjectiveC.NSInteger]]
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc final public class BasicContainerConstants : ObjectiveC.NSObject {
+  @objc public static var stationType: VodafoneV2X.StationKind {
+    @objc get
+  }
+  @objc public static var latitude: Swift.Double {
+    get
+  }
+  @objc public static var longitude: Swift.Double {
+    get
+  }
+  @objc public static var semiMajorConfidence: Swift.UInt {
+    get
+  }
+  @objc public static var semiMinorConfidence: Swift.UInt {
+    get
+  }
+  @objc public static var semiMajorOrientation: VodafoneV2X.V2XHeadingValue {
+    get
+  }
+  @objc public static var altitudeValue: Swift.Double {
+    get
+  }
+  @objc public static var altitudeConfidence: VodafoneV2X.V2XAltitudeConfidence {
+    get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc final public class HFContainerConstants : ObjectiveC.NSObject {
+  @objc public static var headingValue: Swift.Double {
+    get
+  }
+  @objc public static var headingConfidence: VodafoneV2X.V2XHeadingConfidence {
+    get
+  }
+  @objc public static var speedValue: Swift.Double {
+    get
+  }
+  @objc public static var speedConfidence: VodafoneV2X.V2XSpeedConfidence {
+    get
+  }
+  @objc public static var driveDirection: VodafoneV2X.V2XDriveDirection {
+    get
+  }
+  @objc public static var vehicleLength: Swift.Int {
+    get
+  }
+  @objc public static var lengthConfidence: VodafoneV2X.V2XVehicleLengthConfidenceIndication {
+    get
+  }
+  @objc public static var vehicleWidth: Swift.Int {
+    get
+  }
+  @objc public static var curvatureValue: VodafoneV2X.V2XCurvatureValue {
+    get
+  }
+  @objc public static var curvatureConfidence: VodafoneV2X.V2XCurvatureConfidence {
+    get
+  }
+  @objc public static var curvatureCalculationMode: VodafoneV2X.V2XCurvatureCalculationMode {
+    get
+  }
+  @objc public static var yawRateValue: VodafoneV2X.V2XYawRateValue {
+    get
+  }
+  @objc public static var yawRateConfidence: VodafoneV2X.V2XYawRateConfidence {
+    get
+  }
+  @objc public static var longitudinalAccelerationValue: VodafoneV2X.V2XLongitudinalAccelerationValue {
+    get
+  }
+  @objc public static var longitudinalAccelerationConfidence: VodafoneV2X.V2XLongitudinalAccelerationConfidence {
+    get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc final public class LFContainerConstants : ObjectiveC.NSObject {
+  @objc public static var vehicleRole: VodafoneV2X.V2XVehicleRole {
+    get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+public struct SPATEMRecord : Swift.Equatable, VodafoneV2X.EventObjectValidity, Swift.Identifiable, VodafoneV2X.RecordsInitialiser {
+  public let id: Swift.UInt
+  public let validity: Foundation.TimeInterval
+  public let stationID: Swift.UInt
+  public let trafficLightRecords: [VodafoneV2X.TrafficLightRecord]
+  public let timeStamp: Foundation.TimeInterval
+  public static func record(from data: Foundation.Data?) -> VodafoneV2X.SPATEMRecord?
+  public static func == (lhs: VodafoneV2X.SPATEMRecord, rhs: VodafoneV2X.SPATEMRecord) -> Swift.Bool
+  public typealias ID = Swift.UInt
+}
+public struct V2XCAM : VodafoneV2X.MQTTEventObject {
+  public var topic: VodafoneV2X.V2XMQTTTopic
+  public var object: VodafoneV2X.CAMRecord?
+  public init(topic: VodafoneV2X.V2XMQTTTopic, object: VodafoneV2X.CAMRecord?)
+  public typealias Object = VodafoneV2X.CAMRecord
+}
+public protocol CAMServiceUpdating : VodafoneV2X.ETSIServicing {
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class CAMService : VodafoneV2X.GenericService<VodafoneV2X.V2XCAM>, VodafoneV2X.CAMServiceUpdating {
+  @discardableResult
+  override final public func start() -> Swift.Bool
+  @objc deinit
+}
+extension VodafoneV2X.CAMService : VodafoneV2X.SourcePublishing {
+  final public func publish(_ camObject: VodafoneV2X.UPEREncodable, location: CoreLocation.CLLocation?, heading: CoreLocation.CLHeading?, qos: VodafoneV2X.QoSType = .qos0)
+}
+@_inheritsConvenienceInitializers @objc final public class CommonHeaderConstants : ObjectiveC.NSObject {
+  @objc public static var payloadLength: Swift.UInt {
+    get
+  }
+  @objc public static var maxHopLimit: Swift.UInt {
+    get
+  }
+  @objc public static var nextHeader: VodafoneV2X.V2XCommonNextHeader {
+    @objc get
+  }
+  @objc public static var headerType: VodafoneV2X.V2XHeaderType {
+    @objc get
+  }
+  @objc public static var scf: Swift.Bool {
+    get
+  }
+  @objc public static var channelOffload: Swift.Bool {
+    get
+  }
+  @objc public static var tcid: Swift.Int {
+    get
+  }
+  @objc public static var flagsAreMobile: Swift.Bool {
+    get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+public enum DynamicZoneDefaults {
+  public static let tileSize: Swift.Int
+}
+public protocol DynamicZone {
+  var central: Swift.String { get }
+  var north: Swift.String? { get }
+  var south: Swift.String? { get }
+  var east: Swift.String? { get }
+  var west: Swift.String? { get }
+  var northEast: Swift.String? { get }
+  var northWest: Swift.String? { get }
+  var southEast: Swift.String? { get }
+  var southWest: Swift.String? { get }
+  func isEqual(_ obj: VodafoneV2X.DynamicZone) -> Swift.Bool
+  func allTopics() -> [Swift.String]
+  init?(_ location: CoreLocation.CLLocation, precision: Swift.Int)
+}
+extension VodafoneV2X.DynamicZone {
+  public func allTopics() -> [Swift.String]
+}
+public struct DynamicZoneOutput : Swift.Equatable {
+  public let central: Swift.String
+  public let neighbors: VodafoneV2X.Neighbors
+  public init?(_ location: CoreLocation.CLLocation, precision: Swift.Int)
+  public static func == (lhs: VodafoneV2X.DynamicZoneOutput, rhs: VodafoneV2X.DynamicZoneOutput) -> Swift.Bool
+}
+extension VodafoneV2X.DynamicZoneOutput : VodafoneV2X.DynamicZone {
+  public func isEqual(_ obj: VodafoneV2X.DynamicZone) -> Swift.Bool
+  public var north: Swift.String? {
+    get
+  }
+  public var south: Swift.String? {
+    get
+  }
+  public var east: Swift.String? {
+    get
+  }
+  public var west: Swift.String? {
+    get
+  }
+  public var northEast: Swift.String? {
+    get
+  }
+  public var northWest: Swift.String? {
+    get
+  }
+  public var southEast: Swift.String? {
+    get
+  }
+  public var southWest: Swift.String? {
+    get
+  }
+}
+public struct Neighbors : Swift.Equatable {
+  public let north: Swift.String
+  public let south: Swift.String
+  public let east: Swift.String
+  public let west: Swift.String
+  public let northEast: Swift.String
+  public let northWest: Swift.String
+  public let southEast: Swift.String
+  public let southWest: Swift.String
+  public static func == (lhs: VodafoneV2X.Neighbors, rhs: VodafoneV2X.Neighbors) -> Swift.Bool
+}
+@_hasMissingDesignatedInitializers public class ServiceAreaRecord : Swift.Equatable, VodafoneV2X.EventObjectValidity, Swift.Identifiable, VodafoneV2X.RecordsInitialiser {
+  public var validity: Foundation.TimeInterval
+  public var serviceAreaModel: VodafoneV2X.ServiceAreaModel
+  public static func record(from data: Foundation.Data?) -> Self?
+  public static func == (lhs: VodafoneV2X.ServiceAreaRecord, rhs: VodafoneV2X.ServiceAreaRecord) -> Swift.Bool
+  public typealias ID = Swift.ObjectIdentifier
+  @objc deinit
+}
+@objc public protocol TextLines {
+  @objc var textContent: Swift.String { get }
+  @objc var language: Swift.String { get }
+}
+@objc public class ConstTextLines1 : ObjectiveC.NSObject, VodafoneV2X.TextLines {
+  @objc final public let textContent: Swift.String
+  @objc final public let language: Swift.String
+  @objc public init(textContent: Swift.String, language: Swift.String)
+  @objc deinit
+}
+public struct V2XDENM : VodafoneV2X.MQTTEventObject {
+  public var topic: VodafoneV2X.V2XMQTTTopic
+  public var object: VodafoneV2X.DENMRecord?
+  public init(topic: VodafoneV2X.V2XMQTTTopic, object: VodafoneV2X.DENMRecord?)
+  public typealias Object = VodafoneV2X.DENMRecord
+}
+public protocol DENMServiceUpdating : VodafoneV2X.ETSIServicing {
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class DENMService : VodafoneV2X.GenericService<VodafoneV2X.V2XDENM>, VodafoneV2X.DENMServiceUpdating {
+  @objc deinit
+}
+extension VodafoneV2X.DENMService : VodafoneV2X.SourceUpdateable {
+  final public func publish(_ denmObj: VodafoneV2X.UPEREncodable, location: CoreLocation.CLLocation?, heading: CoreLocation.CLHeading?, qos: VodafoneV2X.QoSType, completion: ((Swift.UInt) -> Swift.Void)?)
+  final public func updateObject(_ msgUpdate: VodafoneV2X.V2XMessageUpdater)
+  final public func cancelObject(_ sequenceNumber: Swift.UInt)
+}
+public typealias DIContainer = VodafoneV2X.DIContainerOperators
+public protocol ListProviderServices {
+  var gpsLocationListProvider: VodafoneV2X.ITSLocationsListProvider? { get }
+  var camListProvider: VodafoneV2X.CAMListProvider? { get }
+  var denmListProvider: VodafoneV2X.DENMListProvider? { get }
+  var ivimListProvider: VodafoneV2X.IVIMListProvider? { get }
+  var spatemListProvider: VodafoneV2X.SPATEMListProvider? { get }
+  var mapemListProvider: VodafoneV2X.MAPEMListProvider? { get }
+  var vamListProvider: VodafoneV2X.VAMListProvider? { get }
+}
+public protocol ContainerDefaultServices : VodafoneV2X.ListProviderServices {
+  var gnssReceiver: VodafoneV2X.GNSSReceiving? { get }
+  var gpsLocationSource: VodafoneV2X.GPSLocationUpdating? { get }
+  var mqttClient: VodafoneV2X.MQTTProtocol? { get }
+  var mqttReconnect: VodafoneV2X.MQTTReconnectionProtocol? { get }
+  var camService: VodafoneV2X.CAMServiceUpdating? { get }
+  var denmService: VodafoneV2X.DENMServiceUpdating? { get }
+  var ivimService: VodafoneV2X.IVIMServiceUpdating? { get }
+  var spatemService: VodafoneV2X.SPATEMServiceUpdating? { get }
+  var mapemService: VodafoneV2X.MAPEMServiceUpdating? { get }
+  var vamService: VodafoneV2X.VAMServiceUpdating? { get }
+  var serviceAreaService: VodafoneV2X.ServiceAreaUpdatingProtocol? { get }
+  func dynamicZoneChanged(_ service: VodafoneV2X.V2XDIContainer.DynamicZoneProviderType) -> Combine.AnyPublisher<VodafoneV2X.DynamicZone, Swift.Never>?
+}
+public protocol DIContainerOperators : AnyObject, VodafoneV2X.ContainerDefaultServices {
+  func register<Component>(type: Component.Type, component: Any)
+  func replace<Component>(type: Component.Type, component: Any)
+  func resolve<Component>(type: Component.Type) -> Component?
+  func resolve<Component>() -> Component?
+}
+public protocol DIContainerProvider {
+  var container: VodafoneV2X.DIContainer? { get }
+}
+extension VodafoneV2X.DIContainerProvider {
+  weak public var container: VodafoneV2X.DIContainerOperators? {
+    get
+  }
+}
+public protocol ServiceConfigProtocol : Swift.Decodable, Swift.Encodable {
+  var expiration: Foundation.TimeInterval { get }
+  var subServiceGroup: VodafoneV2X.MQTTSubServiceGroup? { get }
+}
+@_inheritsConvenienceInitializers @objc final public class BTPConstants : ObjectiveC.NSObject {
+  @objc public static var destinationPort: VodafoneV2X.V2XDestPort {
+    get
+  }
+  @objc public static var destinationPortInfo: Swift.Int {
+    get
+  }
+  @objc public static let encodedLength: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+public struct LocationEmulatorModel : Swift.Decodable {
+  public var altitude: Swift.Double?
+  public var bearingInDegree: Swift.Double?
+  public var fixTime: Swift.Double?
+  public var latitude: Swift.Double?
+  public var longitude: Swift.Double?
+  public var speedInMeterPerSecond: Swift.Double?
+  public var eventName: Swift.String?
+  public var utcCreationTimeInMs: Foundation.TimeInterval?
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct GnssEmulationEndPointModel : Swift.Codable {
+  public var gnssMqttIsEnabled: Swift.Bool?
+  public var gnssMqttHost: Swift.String?
+  public var gnssMqttPort: Swift.Int?
+  public var gnssMqttUsername: Swift.String?
+  public var gnssMqttPassword: Swift.String?
+  public var gnssMqttTopic: Swift.String?
+  public init(gnssMqttIsEnabled: Swift.Bool?, gnssMqttHost: Swift.String?, gnssMqttPort: Swift.Int?, gnssMqttUsername: Swift.String?, gnssMqttPassword: Swift.String?, gnssMqttTopic: Swift.String?)
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public typealias ServiceAreaDistance = (serviceArea: VodafoneV2X.ServiceArea?, distance: CoreLocation.CLLocationDistance?)
+public typealias ServiceAreaIDDistance = (serviceAreaID: Swift.String?, distance: CoreLocation.CLLocationDistance?)
+public struct V2XServiceArea : VodafoneV2X.MQTTEventObject {
+  public var topic: VodafoneV2X.V2XMQTTTopic
+  public var object: VodafoneV2X.ServiceAreaRecord?
+  public init(topic: VodafoneV2X.V2XMQTTTopic, object: VodafoneV2X.ServiceAreaRecord?)
+  public typealias Object = VodafoneV2X.ServiceAreaRecord
+}
+public protocol ServiceAreaUpdating : VodafoneV2X.ETSIServicing {
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class ServiceAreaService : VodafoneV2X.GenericService<VodafoneV2X.V2XServiceArea>, VodafoneV2X.ServiceAreaUpdatingProtocol {
+  final public var getServiceAreasList: VodafoneV2X.ServiceAreaModel {
+    get
+  }
+  final public var serviceAreaListChanged: Combine.AnyPublisher<VodafoneV2X.ServiceAreaModel, Swift.Never> {
+    get
+  }
+  final public func findNearestServiceArea(serviceAreas: [VodafoneV2X.ServiceArea]?, currentServiceArea: VodafoneV2X.ServiceArea?) -> VodafoneV2X.ServiceAreaDistance
+  final public func findServiceAreaPerCurrentLocation(serviceAreas: [VodafoneV2X.ServiceArea]?) -> VodafoneV2X.ServiceArea?
+  final public func findDefaultServiceArea(serviceAreaModel: VodafoneV2X.ServiceAreaModel?) -> VodafoneV2X.ServiceArea?
+  public enum Constants {
+  }
+  @objc deinit
+}
+@objc public enum CodeUnits : Swift.Int {
+  case kmperh = 0
+  case milesperh = 1
+  case kilometre = 2
+  case metre = 3
+  case decimetre = 4
+  case centimetre = 5
+  case mile = 6
+  case yard = 7
+  case foot = 8
+  case minutesOfTime = 9
+  case tonnes = 10
+  case hundredkg = 11
+  case pound = 12
+  case rateOfIncline = 13
+  case durationinminutes = 14
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public protocol RoadSignISO14823 {
+  @objc var nature: Swift.Int { get }
+  @objc var serialNumber: Swift.Int { get }
+  @objc var pictogram: Swift.String? { get }
+}
+public protocol RoadSign14823 : VodafoneV2X.RoadSignISO14823 {
+  var speedMax: Swift.Int? { get }
+  var speedUnit: VodafoneV2X.CodeUnits? { get }
+}
+@objc public class RoadSignImpl : ObjectiveC.NSObject, VodafoneV2X.RoadSignISO14823, VodafoneV2X.RoadSign14823 {
+  @objc final public let nature: Swift.Int
+  @objc final public let serialNumber: Swift.Int
+  @objc final public let pictogram: Swift.String?
+  final public let speedMax: Swift.Int?
+  final public let speedUnit: VodafoneV2X.CodeUnits?
+  @objc public init(nature: Swift.Int, serialNumber: Swift.Int, pictogram: Swift.String?, speedMax: Swift.Int, speedUnit: Swift.Int)
+  @objc deinit
+}
+public struct VAMRecord : Swift.Equatable, VodafoneV2X.EventObjectValidity, VodafoneV2X.ETSICancellable, Swift.Identifiable, VodafoneV2X.RecordsInitialiser {
+  public var validity: Foundation.TimeInterval
+  public let creationUTCTime: Foundation.TimeInterval
+  public let stationID: Swift.UInt
+  public let stationType: VodafoneV2X.StationKind
+  public let position: CoreLocation.CLLocationCoordinate2D
+  public let altitude: CoreLocation.CLLocationDistance
+  public let speedKmH: Swift.Double
+  public let heading: CoreLocation.CLLocationDirection
+  public let profileAndSubprofile: VodafoneV2X.V2XMappedProfile
+  public let pathHistory: [VodafoneV2X.PathPointPublic]?
+  public let pathPrediction: [VodafoneV2X.VRUPathPoint]?
+  public let profileIndex: Swift.UInt
+  public let subProfileIndex: Swift.UInt
+  public var id: Swift.UInt {
+    get
+  }
+  public var canceled: Swift.Bool {
+    get
+  }
+  public static func record(from data: Foundation.Data?) -> VodafoneV2X.VAMRecord?
+  public static func == (lhs: VodafoneV2X.VAMRecord, rhs: VodafoneV2X.VAMRecord) -> Swift.Bool
+  public typealias ID = Swift.UInt
+}
+public struct Point : Swift.Hashable {
+  public var x: Swift.Double
+  public var y: Swift.Double
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: VodafoneV2X.Point, b: VodafoneV2X.Point) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class Polygon {
+  public var points: [VodafoneV2X.Point]
+  public func contains(point: VodafoneV2X.Point) -> Swift.Bool
+  @objc deinit
+}
+public struct V2XVAM : VodafoneV2X.MQTTEventObject {
+  public var topic: VodafoneV2X.V2XMQTTTopic
+  public var object: VodafoneV2X.VAMRecord?
+  public init(topic: VodafoneV2X.V2XMQTTTopic, object: VodafoneV2X.VAMRecord?)
+  public typealias Object = VodafoneV2X.VAMRecord
+}
+public protocol VAMServiceUpdating : VodafoneV2X.ETSIServicing {
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class VAMService : VodafoneV2X.GenericService<VodafoneV2X.V2XVAM>, VodafoneV2X.VAMServiceUpdating {
+  @discardableResult
+  override final public func start() -> Swift.Bool
+  @objc deinit
+}
+extension VodafoneV2X.VAMService : VodafoneV2X.SourcePublishing {
+  final public func publish(_ vamObject: VodafoneV2X.UPEREncodable, location: CoreLocation.CLLocation?, heading: CoreLocation.CLHeading?, qos: VodafoneV2X.QoSType = .qos0)
+}
+extension VodafoneV2X.V2XDIContainer.DynamicZoneProviderType : Swift.Equatable {}
+extension VodafoneV2X.V2XDIContainer.DynamicZoneProviderType : Swift.Hashable {}
+extension VodafoneV2X.ServiceState : Swift.Equatable {}
+extension VodafoneV2X.ServiceState : Swift.Hashable {}
+extension VodafoneV2X.CoreLogging : Swift.Equatable {}
+extension VodafoneV2X.CoreLogging : Swift.Hashable {}
+extension VodafoneV2X.CoreLogging : Swift.RawRepresentable {}
+extension VodafoneV2X.V2XSDKLogsModel.LogLevel : Swift.Equatable {}
+extension VodafoneV2X.V2XSDKLogsModel.LogLevel : Swift.Hashable {}
+extension VodafoneV2X.V2XSDKLogsModel.LogLevel : Swift.RawRepresentable {}
+extension VodafoneV2X.TrafficCondition : Swift.Equatable {}
+extension VodafoneV2X.TrafficCondition : Swift.Hashable {}
+extension VodafoneV2X.Accident : Swift.Equatable {}
+extension VodafoneV2X.Accident : Swift.Hashable {}
+extension VodafoneV2X.Roadworks : Swift.Equatable {}
+extension VodafoneV2X.Roadworks : Swift.Hashable {}
+extension VodafoneV2X.AdverseWeatherConditionAdhesion : Swift.Equatable {}
+extension VodafoneV2X.AdverseWeatherConditionAdhesion : Swift.Hashable {}
+extension VodafoneV2X.HazardousLocationSurfaceCondition : Swift.Equatable {}
+extension VodafoneV2X.HazardousLocationSurfaceCondition : Swift.Hashable {}
+extension VodafoneV2X.HazardousLocationObstacleOnTheRoad : Swift.Equatable {}
+extension VodafoneV2X.HazardousLocationObstacleOnTheRoad : Swift.Hashable {}
+extension VodafoneV2X.HazardousLocationAnimalOnTheRoad : Swift.Equatable {}
+extension VodafoneV2X.HazardousLocationAnimalOnTheRoad : Swift.Hashable {}
+extension VodafoneV2X.HumanPresenceOnTheRoad : Swift.Equatable {}
+extension VodafoneV2X.HumanPresenceOnTheRoad : Swift.Hashable {}
+extension VodafoneV2X.WrongWayDriving : Swift.Equatable {}
+extension VodafoneV2X.WrongWayDriving : Swift.Hashable {}
+extension VodafoneV2X.RescueAndRecoveryWorkInProgress : Swift.Equatable {}
+extension VodafoneV2X.RescueAndRecoveryWorkInProgress : Swift.Hashable {}
+extension VodafoneV2X.AdverseWeatherConditionExtremeWeatherCondition : Swift.Equatable {}
+extension VodafoneV2X.AdverseWeatherConditionExtremeWeatherCondition : Swift.Hashable {}
+extension VodafoneV2X.AdverseWeatherConditionVisibility : Swift.Equatable {}
+extension VodafoneV2X.AdverseWeatherConditionVisibility : Swift.Hashable {}
+extension VodafoneV2X.AdverseWeatherConditionPrecipitation : Swift.Equatable {}
+extension VodafoneV2X.AdverseWeatherConditionPrecipitation : Swift.Hashable {}
+extension VodafoneV2X.SlowVehicle : Swift.Equatable {}
+extension VodafoneV2X.SlowVehicle : Swift.Hashable {}
+extension VodafoneV2X.DangerousEndOfQueue : Swift.Equatable {}
+extension VodafoneV2X.DangerousEndOfQueue : Swift.Hashable {}
+extension VodafoneV2X.VehicleBreakdown : Swift.Equatable {}
+extension VodafoneV2X.VehicleBreakdown : Swift.Hashable {}
+extension VodafoneV2X.PostCrash : Swift.Equatable {}
+extension VodafoneV2X.PostCrash : Swift.Hashable {}
+extension VodafoneV2X.HumanProblem : Swift.Equatable {}
+extension VodafoneV2X.HumanProblem : Swift.Hashable {}
+extension VodafoneV2X.StationaryVehicle : Swift.Equatable {}
+extension VodafoneV2X.StationaryVehicle : Swift.Hashable {}
+extension VodafoneV2X.EmergencyVehicleApproaching : Swift.Equatable {}
+extension VodafoneV2X.EmergencyVehicleApproaching : Swift.Hashable {}
+extension VodafoneV2X.HazardousLocationDangerousCurve : Swift.Equatable {}
+extension VodafoneV2X.HazardousLocationDangerousCurve : Swift.Hashable {}
+extension VodafoneV2X.CollisionRisk : Swift.Equatable {}
+extension VodafoneV2X.CollisionRisk : Swift.Hashable {}
+extension VodafoneV2X.SignalViolation : Swift.Equatable {}
+extension VodafoneV2X.SignalViolation : Swift.Hashable {}
+extension VodafoneV2X.DangerousSituation : Swift.Equatable {}
+extension VodafoneV2X.DangerousSituation : Swift.Hashable {}
+extension VodafoneV2X.QoSType : Swift.Equatable {}
+extension VodafoneV2X.QoSType : Swift.Hashable {}
+extension VodafoneV2X.QoSType : Swift.RawRepresentable {}
+extension VodafoneV2X.V2XMQTTConfigurator.ProtocolVersion : Swift.Equatable {}
+extension VodafoneV2X.V2XMQTTConfigurator.ProtocolVersion : Swift.Hashable {}
+extension VodafoneV2X.V2XMQTTConfigurator.ProtocolVersion : Swift.RawRepresentable {}
+extension VodafoneV2X.V2XMQTTConfigurator.MQTTConfigError : Swift.Equatable {}
+extension VodafoneV2X.V2XMQTTConfigurator.MQTTConfigError : Swift.Hashable {}
+extension VodafoneV2X.V2XMQTTConfigurator.STEPInstance : Swift.Equatable {}
+extension VodafoneV2X.V2XMQTTConfigurator.STEPInstance : Swift.Hashable {}
+extension VodafoneV2X.V2XMQTTConfigurator.STEPInstance : Swift.RawRepresentable {}
+extension VodafoneV2X.MQTTConnectionState : Swift.Equatable {}
+extension VodafoneV2X.MQTTConnectionState : Swift.Hashable {}
+extension VodafoneV2X.MQTTConnectionState : Swift.RawRepresentable {}
+extension VodafoneV2X.V2XManeuver : Swift.Equatable {}
+extension VodafoneV2X.V2XManeuver : Swift.Hashable {}
+extension VodafoneV2X.V2XManeuver : Swift.RawRepresentable {}
+extension VodafoneV2X.CodeUnits : Swift.Equatable {}
+extension VodafoneV2X.CodeUnits : Swift.Hashable {}
+extension VodafoneV2X.CodeUnits : Swift.RawRepresentable {}
