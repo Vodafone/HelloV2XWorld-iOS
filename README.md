@@ -13,7 +13,7 @@ You can also use this application as a model to start developing your own applic
 ## Getting Started
 
 ### Prerequisites
-* Xcode version 11 or higher is already installed on your MacBook.
+* Xcode version 14.1 or higher is already installed on your MacBook.
 * You have some experience with developing apps using swift and swiftUI.
 * You have a tool pre-installed for unarchiving RAR or Zip files like "The Unarchiver".
 * Your Internet connectivity is up and running.
