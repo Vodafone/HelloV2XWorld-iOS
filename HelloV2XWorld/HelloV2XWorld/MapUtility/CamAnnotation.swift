@@ -47,14 +47,8 @@ final class CamAnnotation: NSObject, MKAnnotation {
         }
         return nil
     }
-    func getStationTypeText() -> String {
-        if id == ConfigsOnDemand.stationID {
-            return ConfigsOnDemand.stationType.getTextValue()
-        }
-        return v2xCAM?.object?.stationType.getTextValue() ?? ""
-    }
     func getSubtitleText() -> String {
-        let stationType = getStationTypeText()
+        let stationType = v2xCAM?.object?.stationType.getTextValue() ?? ""
         let speedKmH = Double(round(1000 * (v2xCAM?.object?.speedKmH ?? 0.0)) / 1000)
         let headingDegrees = v2xCAM?.object?.headingDegrees ?? 0.0
 

@@ -48,7 +48,7 @@ class SDKConfigurator: NSObject, DIContainerProvider {
         let camPublicSubServiceGroup = MQTTSubServiceGroup(publish: "510298_1",
                                                            subscribe: "510298_1")
         // Provide CAM service config of validity, subServiceGroup for the topics and transmit/receive config
-        let camConfig = ServiceConfiguration(expiration: 2,
+        let camConfig = ServiceConfiguration(expiration: 5,
                                              subServiceGroup: camPublicSubServiceGroup,
                                              txRxRole: RxTxRoles(tx: true, rx: true))
         // Provide the list of service you would like to config with SDK Framework
@@ -67,11 +67,6 @@ class SDKConfigurator: NSObject, DIContainerProvider {
     /// Reconnect again with SDK step instance
     func reconnectMQTT() {
         setStationType()
-        let mqttConfig = V2XMQTTConfigurator(stepInstance: .DE_PROD_FRANKFURT,
-                                             username: Credentials.userName.rawValue,
-                                             pass: Credentials.password.rawValue,
-                                             reconnect: nil)
-        V2XDIContainer.shared?.reconfigureMQTT(mqttConfig)
     }
     // MARK: - setup CAM
     /// Launch the CAM service
@@ -93,7 +88,7 @@ class SDKConfigurator: NSObject, DIContainerProvider {
     /// Check new SDK step instance connection state
     /// - Parameter completion: The current connection state
     func checkConnectionState(completion: @escaping (String) -> Void) {
-        guard let mqttService = container?.mqttClient else {
+        guard let mqttService = container?.mqttClient, mqttCancellable == nil  else {
             return
         }
         mqttCancellable = mqttService.connectionState.receive(on: RunLoop.main).sink { connectionState in
