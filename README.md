@@ -102,7 +102,11 @@ You can also use this application as a model to start developing your own applic
 ## Version History
 
 * 1.0
-    * Initial Release
+    * Initial Release.
+* 1.0.1
+    * Bug Fixing
+        * Fix connectivity after changing station type from settings.
+        * Fix ITS marker orientation according to the device orientation.
 
 ## License
 
