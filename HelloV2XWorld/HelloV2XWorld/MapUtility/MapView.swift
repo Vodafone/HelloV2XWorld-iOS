@@ -177,14 +177,12 @@ extension MapView {
             self.camAnnotations[index].stationType = item.object?.stationType
             let annotationView = mapView.view(for: annotation)
             annotationView?.detailCalloutAccessoryView = getSubtitleView(subtitle: annotation.getSubtitleText())
-            if ConfigsOnDemand.stationID != annotation.id {
-                var rotationAngle = 0.0
-                if let degree = item.object?.headingDegrees, degree > 0.0 {
-                    rotationAngle = CGFloat(degree * .pi / 180 ) - (mapView.camera.heading * .pi / 180)
-                }
-                let updatedHeadingImage = annotation.image.rotate(radians: Float(rotationAngle))
-                annotationView?.image = updatedHeadingImage
+            var rotationAngle = 0.0
+            if let degree = item.object?.headingDegrees, degree > 0.0 {
+                rotationAngle = CGFloat(degree * .pi / 180 ) - (mapView.camera.heading * .pi / 180)
             }
+            let updatedHeadingImage = annotation.image.rotate(radians: Float(rotationAngle))
+            annotationView?.image = updatedHeadingImage
             break
         }
     }
