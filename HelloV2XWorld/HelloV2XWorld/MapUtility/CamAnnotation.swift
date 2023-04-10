@@ -50,8 +50,28 @@ final class CamAnnotation: NSObject, MKAnnotation {
     func getSubtitleText() -> String {
         let stationType = v2xCAM?.object?.stationType.getTextValue() ?? ""
         let speedKmH = Double(round(1000 * (v2xCAM?.object?.speedKmH ?? 0.0)) / 1000)
-        let headingDegrees = v2xCAM?.object?.headingDegrees ?? 0.0
-
+        let headingDegrees = adjustHeading(v2xCAM?.object?.headingDegrees ?? 0.0)
         return "StationType=\(stationType), Speed=\(speedKmH) Km/h, Heading=\(headingDegrees) Degree"
+    }
+    /// Adjusts the heading value based on the current device orientation
+    /// - Parameter heading: Heading value of v2xCAM
+    /// - Returns: Adjusted heading value int the correct degree range
+    func adjustHeading(_ heading: Float) -> Float {
+        var newHeading = heading
+        // If device is in landscape right orientation, add 90 degrees to the heading, Otherwise subtract 90 degrees
+        if ConfigsOnDemand.customDeviceOrientation == .landscapeRight {
+            newHeading += 90
+        } else {
+            newHeading -= 90
+        }
+        // If heading is less than 0, add 360 until it is in the range 0...360
+        while newHeading < 0 {
+            newHeading += 360
+        }
+        // If heading is greater than 360, subtract 360 until it is in the range 0...360
+        while newHeading >= 360 {
+            newHeading -= 360
+        }
+        return newHeading
     }
 }
