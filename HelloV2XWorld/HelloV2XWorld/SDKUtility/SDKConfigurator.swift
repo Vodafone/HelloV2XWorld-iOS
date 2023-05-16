@@ -33,24 +33,8 @@ class SDKConfigurator: NSObject, DIContainerProvider {
             UserDefaults.standard.set(StationKind.passengerCar.rawValue, forKey: Constants.stationType.rawValue)
         }
     }
-    /// Setup the notification for device orientation
-    func setupDeviceOrientationNotification() {
-        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-        NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
-    }
-    /// Setup device orientation when orientation change
-    @objc func orientationDidChange() {
-        if let orientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation {
-            if orientation == .landscapeLeft {
-                ConfigsOnDemand.customDeviceOrientation = .landscapeRight
-            } else if orientation == .landscapeRight {
-                ConfigsOnDemand.customDeviceOrientation = .landscapeLeft
-            }
-        }
-    }
     /// Provide correct credentials and connect to the STEP envionment
     func connectToSTEP() {
-        setupDeviceOrientationNotification()
         setStationType()
         // Credentials for the step instance
         // Here we use the production instance as DE_PROD_FRANKFURT

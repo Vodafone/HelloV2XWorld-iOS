@@ -51,7 +51,6 @@ final class CamAnnotation: NSObject, MKAnnotation {
         let stationType = v2xCAM?.object?.stationType.getTextValue() ?? ""
         let speedKmH = Double(round(1000 * (v2xCAM?.object?.speedKmH ?? 0.0)) / 1000)
         let headingDegrees = v2xCAM?.object?.headingDegrees ?? 0.0
-
         return "StationType=\(stationType), Speed=\(speedKmH) Km/h, Heading=\(headingDegrees) Degree"
     }
 }
