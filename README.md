@@ -107,7 +107,10 @@ You can also use this application as a model to start developing your own applic
     * Bug Fixing
         * Fix connectivity after changing station type from settings.
         * Fix ITS marker orientation according to the device orientation.
-
+* 1.0.2
+    * Bug Fixing
+        * Fix ITS marker orientation according to the device orientation.
+        
 ## License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
