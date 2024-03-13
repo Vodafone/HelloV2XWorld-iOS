@@ -96,6 +96,9 @@ struct SplashScreenView: View {
         .onAppear {
             // Load the terms and conditions PDF Document
             loadPDFDocument()
+            
+            // Prevent the device from sleeping
+            UIApplication.shared.isIdleTimerDisabled = true
         }
     }
     /// Load Terms And Conditions PDF Document
