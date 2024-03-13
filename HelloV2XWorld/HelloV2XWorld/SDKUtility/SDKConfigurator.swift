@@ -58,7 +58,9 @@ class SDKConfigurator: NSObject, DIContainerProvider {
                                         ivim: nil,
                                         mapem: nil,
                                         spatem: nil,
-                                        vam: nil)
+                                        vam: nil,
+                                        cpm: nil,
+                                        custom: nil)
         // Provide the mqttConfig for credentials and service as showed above
         let config = V2XConfigurator(mqtt: mqttConfig, services: listServices)
         // Setup the SDK DI container with the config and custom geohasing if required "optional" from project side.
