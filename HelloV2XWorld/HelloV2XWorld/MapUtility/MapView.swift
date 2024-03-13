@@ -52,6 +52,7 @@ struct MapView: UIViewRepresentable, DIContainerProvider {
     }
     class Coordinator: NSObject, MKMapViewDelegate {
         var parent: MapView
+        var myLastKnownCourse: CLLocationDirection?
         init(_ parent: MapView) {
             self.parent = parent
         }
@@ -75,6 +76,15 @@ struct MapView: UIViewRepresentable, DIContainerProvider {
                                                 fromEyeCoordinate: lastLocation?.coordinate ?? CLLocationCoordinate2D(),
                                                 eyeAltitude: mapView.camera.centerCoordinateDistance)
                     mapCamera.pitch = 0
+                    
+                    if let course = userLocation.location?.course, course > 0 {
+                        self.myLastKnownCourse = course
+                    }
+                    
+                    if let course = self.myLastKnownCourse {
+                        mapCamera.heading = course
+                    }
+                    
                     let shouldAnimate = self.parent.isMajorDistance(pre: lastLocation, current: userLocation.location)
                     mapView.setCamera(mapCamera, animated: !shouldAnimate)
                 }
@@ -177,12 +187,17 @@ extension MapView {
             self.camAnnotations[index].stationType = item.object?.stationType
             let annotationView = mapView.view(for: annotation)
             annotationView?.detailCalloutAccessoryView = getSubtitleView(subtitle: annotation.getSubtitleText())
-            var rotationAngle = 0.0
-            if let degree = item.object?.headingDegrees, degree > 0.0 {
-                rotationAngle = CGFloat(degree * .pi / 180 ) - (mapView.camera.heading * .pi / 180)
+            
+            if annotation.id == ConfigsOnDemand.stationID {
+                annotationView?.image = annotation.image
+            } else {
+                var rotationAngle = 0.0
+                if let degree = item.object?.headingDegrees, degree > 0.0 {
+                    rotationAngle = CGFloat(degree * .pi / 180 ) - (mapView.camera.heading * .pi / 180)
+                }
+                let updatedHeadingImage = annotation.image.rotate(radians: Float(rotationAngle))
+                annotationView?.image = updatedHeadingImage
             }
-            let updatedHeadingImage = annotation.image.rotate(radians: Float(rotationAngle))
-            annotationView?.image = updatedHeadingImage
             break
         }
     }
