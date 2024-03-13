@@ -110,6 +110,10 @@ You can also use this application as a model to start developing your own applic
 * 1.0.2
     * Bug Fixing
         * Fix ITS marker orientation according to the device orientation.
+* 1.0.3
+    * Bug Fixing
+        * Fix map rotation according to the course value instead of heading.
+        * Prevent the device screen from sleeping while the app is running.
         
 ## License
 
